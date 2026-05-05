@@ -76,10 +76,25 @@ const TabsContext = React.createContext<{
   onValueChange: (value: string) => void
 } | null>(null)
 
-const TabsRoot = ({ defaultValue, className, children }: { defaultValue: string, className?: string, children: React.ReactNode }) => {
-  const [value, setValue] = React.useState(defaultValue)
+const TabsRoot = ({ 
+  defaultValue, 
+  value: controlledValue, 
+  onValueChange: controlledOnValueChange, 
+  className, 
+  children 
+}: { 
+  defaultValue?: string, 
+  value?: string, 
+  onValueChange?: (value: string) => void, 
+  className?: string, 
+  children: React.ReactNode 
+}) => {
+  const [internalValue, setInternalValue] = React.useState(defaultValue || "")
+  const value = controlledValue !== undefined ? controlledValue : internalValue
+  const onValueChange = controlledOnValueChange !== undefined ? controlledOnValueChange : setInternalValue
+
   return (
-    <TabsContext.Provider value={{ value, onValueChange: setValue }}>
+    <TabsContext.Provider value={{ value, onValueChange }}>
       <div className={className}>{children}</div>
     </TabsContext.Provider>
   )

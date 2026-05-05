@@ -1,3 +1,859 @@
+export type QuestionTopic = 
+  | "Flaw"
+  | "Principle"
+  | "Principle Strengthen"
+  | "Strengthen Application"
+  | "Principle Conform"
+  | "Parallel Flaw"
+  | "Timed LR"
+  | "RC";
+
+export type QuestionRef = {
+  id: string;
+  topic: QuestionTopic;
+  set: string;
+  level?: "Foundation" | "Level 1" | "Level 2" | "Level 3" | "Level 4" | "Bridge" | "Timed" | "Review";
+  pt: string;
+  section: string;
+  question: string;
+  instructions: string;
+  reviewPrompt: string;
+};
+
+export type PracticeSet = {
+  id: string;
+  title: string;
+  topic: "Flaw" | "Principle" | "Parallel Flaw" | "RC" | "Timed LR";
+  stage: string;
+  purpose: string;
+  whenToDo: string;
+  beforeYouStart: string[];
+  questions: string[]; // IDs from questionBank
+  reviewInstructions: string[];
+  completionCriteria: string[];
+};
+
+export type Flashcard = {
+  id: string;
+  topic: "Flaw" | "Principle" | "Parallel Flaw" | "Review";
+  front: string;
+  back: string;
+  tag: string;
+};
+
+export const questionBank: QuestionRef[] = [
+  // Flaw Level 1
+  {
+    id: "flaw-l1-001",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 1",
+    level: "Level 1",
+    pt: "151",
+    section: "2",
+    question: "3",
+    instructions: "Before answering, identify the conclusion, evidence, and assumption. Predict the flaw in plain English before checking the answer choices.",
+    reviewPrompt: "Write: The author’s mistake is ______. Then explain why the tempting wrong answer was wrong."
+  },
+  {
+    id: "flaw-l1-002",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 1",
+    level: "Level 1",
+    pt: "104",
+    section: "4",
+    question: "10",
+    instructions: "Before answering, identify the conclusion, evidence, and assumption. Predict the flaw in plain English before checking the answer choices.",
+    reviewPrompt: "Write: The author’s mistake is ______. Then explain why the tempting wrong answer was wrong."
+  },
+  {
+    id: "flaw-l1-003",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 1",
+    level: "Level 1",
+    pt: "106",
+    section: "3",
+    question: "5",
+    instructions: "Before answering, identify the conclusion, evidence, and assumption. Predict the flaw in plain English before checking the answer choices.",
+    reviewPrompt: "Write: The author’s mistake is ______. Then explain why the tempting wrong answer was wrong."
+  },
+  {
+    id: "flaw-l1-004",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 1",
+    level: "Level 1",
+    pt: "139",
+    section: "4",
+    question: "3",
+    instructions: "Before answering, identify the conclusion, evidence, and assumption. Predict the flaw in plain English before checking the answer choices.",
+    reviewPrompt: "Write: The author’s mistake is ______. Then explain why the tempting wrong answer was wrong."
+  },
+  {
+    id: "flaw-l1-005",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 1",
+    level: "Level 1",
+    pt: "118",
+    section: "3",
+    question: "6",
+    instructions: "Before answering, identify the conclusion, evidence, and assumption. Predict the flaw in plain English before checking the answer choices.",
+    reviewPrompt: "Write: The author’s mistake is ______. Then explain why the tempting wrong answer was wrong."
+  },
+  // Flaw Level 2
+  {
+    id: "flaw-l2-001",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 2",
+    level: "Level 2",
+    pt: "127",
+    section: "3",
+    question: "17",
+    instructions: "Answer-choice precision. Predict the flaw in plain English first. Be careful with 'Too Strong' traps.",
+    reviewPrompt: "Label every answer choice for its specific logical style. Why exactly was the trap answer too strong?"
+  },
+  {
+    id: "flaw-l2-002",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 2",
+    level: "Level 2",
+    pt: "105",
+    section: "1",
+    question: "26",
+    instructions: "Answer-choice precision. Predict the flaw in plain English first. Be careful with 'Too Strong' traps.",
+    reviewPrompt: "Label every answer choice for its specific logical style. Why exactly was the trap answer too strong?"
+  },
+  {
+    id: "flaw-l2-003",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 2",
+    level: "Level 2",
+    pt: "106",
+    section: "3",
+    question: "2",
+    instructions: "Answer-choice precision. Predict the flaw in plain English first. Be careful with 'Too Strong' traps.",
+    reviewPrompt: "Label every answer choice for its specific logical style. Why exactly was the trap answer too strong?"
+  },
+  {
+    id: "flaw-l2-004",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 2",
+    level: "Level 2",
+    pt: "110",
+    section: "2",
+    question: "3",
+    instructions: "Answer-choice precision. Predict the flaw in plain English first. Be careful with 'Too Strong' traps.",
+    reviewPrompt: "Label every answer choice for its specific logical style. Why exactly was the trap answer too strong?"
+  },
+  {
+    id: "flaw-l2-005",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 2",
+    level: "Level 2",
+    pt: "103",
+    section: "3",
+    question: "8",
+    instructions: "Answer-choice precision. Predict the flaw in plain English first. Be careful with 'Too Strong' traps.",
+    reviewPrompt: "Label every answer choice for its specific logical style. Why exactly was the trap answer too strong?"
+  },
+  // Flaw Level 3
+  {
+    id: "flaw-l3-001",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 3",
+    level: "Level 3",
+    pt: "155",
+    section: "4",
+    question: "20",
+    instructions: "Slow down on abstract wording. Map the abstract terms back to the stimulus facts.",
+    reviewPrompt: "Explain why the tempting wrong answer was tempting. Translate the correct answer's abstract wording into concrete facts."
+  },
+  {
+    id: "flaw-l3-002",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 3",
+    level: "Level 3",
+    pt: "102",
+    section: "3",
+    question: "23",
+    instructions: "Slow down on abstract wording. Map the abstract terms back to the stimulus facts.",
+    reviewPrompt: "Explain why the tempting wrong answer was tempting. Translate the correct answer's abstract wording into concrete facts."
+  },
+  {
+    id: "flaw-l3-003",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 3",
+    level: "Level 3",
+    pt: "126",
+    section: "4",
+    question: "15",
+    instructions: "Slow down on abstract wording. Map the abstract terms back to the stimulus facts.",
+    reviewPrompt: "Explain why the tempting wrong answer was tempting. Translate the correct answer's abstract wording into concrete facts."
+  },
+  {
+    id: "flaw-l3-004",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 3",
+    level: "Level 3",
+    pt: "113",
+    section: "4",
+    question: "22",
+    instructions: "Slow down on abstract wording. Map the abstract terms back to the stimulus facts.",
+    reviewPrompt: "Explain why the tempting wrong answer was tempting. Translate the correct answer's abstract wording into concrete facts."
+  },
+  {
+    id: "flaw-l3-005",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 3",
+    level: "Level 3",
+    pt: "117",
+    section: "3",
+    question: "6",
+    instructions: "Slow down on abstract wording. Map the abstract terms back to the stimulus facts.",
+    reviewPrompt: "Explain why the tempting wrong answer was tempting. Translate the correct answer's abstract wording into concrete facts."
+  },
+  // Flaw Level 4
+  {
+    id: "flaw-l4-001",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 4",
+    level: "Level 4",
+    pt: "152",
+    section: "2",
+    question: "18",
+    instructions: "Predict before answer choices. These involve mixed flaws and very technical wording.",
+    reviewPrompt: "If you missed it, redo after 24 hours. State exactly which logical bridge was missing."
+  },
+  {
+    id: "flaw-l4-002",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 4",
+    level: "Level 4",
+    pt: "152",
+    section: "4",
+    question: "16",
+    instructions: "Predict before answer choices. These involve mixed flaws and very technical wording.",
+    reviewPrompt: "If you missed it, redo after 24 hours. State exactly which logical bridge was missing."
+  },
+  {
+    id: "flaw-l4-003",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 4",
+    level: "Level 4",
+    pt: "106",
+    section: "2",
+    question: "18",
+    instructions: "Predict before answer choices. These involve mixed flaws and very technical wording.",
+    reviewPrompt: "If you missed it, redo after 24 hours. State exactly which logical bridge was missing."
+  },
+  {
+    id: "flaw-l4-004",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 4",
+    level: "Level 4",
+    pt: "108",
+    section: "3",
+    question: "15",
+    instructions: "Predict before answer choices. These involve mixed flaws and very technical wording.",
+    reviewPrompt: "If you missed it, redo after 24 hours. State exactly which logical bridge was missing."
+  },
+  {
+    id: "flaw-l4-005",
+    topic: "Flaw",
+    set: "Flaw Progressive Mastery Level 4",
+    level: "Level 4",
+    pt: "149",
+    section: "3",
+    question: "20",
+    instructions: "Predict before answer choices. These involve mixed flaws and very technical wording.",
+    reviewPrompt: "If you missed it, redo after 24 hours. State exactly which logical bridge was missing."
+  },
+  // Principle Strengthen
+  {
+    id: "prin-st-001",
+    topic: "Principle Strengthen",
+    set: "Principle Strengthen Homework",
+    pt: "135",
+    section: "1",
+    question: "14",
+    instructions: "Identify the conclusion and evidence first. Match evidence to the IF side and conclusion to the THEN side.",
+    reviewPrompt: "State the rule clearly: If [Evidence], then [Conclusion]. Why was the wrong answer a mismatch?"
+  },
+  {
+    id: "prin-st-002",
+    topic: "Principle Strengthen",
+    set: "Principle Strengthen Homework",
+    pt: "137",
+    section: "2",
+    question: "8",
+    instructions: "Identify the conclusion and evidence first. Match evidence to the IF side and conclusion to the THEN side.",
+    reviewPrompt: "State the rule clearly: If [Evidence], then [Conclusion]. Why was the wrong answer a mismatch?"
+  },
+  {
+    id: "prin-st-003",
+    topic: "Principle Strengthen",
+    set: "Principle Strengthen Homework",
+    pt: "138",
+    section: "2",
+    question: "5",
+    instructions: "Identify the conclusion and evidence first. Match evidence to the IF side and conclusion to the THEN side.",
+    reviewPrompt: "State the rule clearly: If [Evidence], then [Conclusion]. Why was the wrong answer a mismatch?"
+  },
+  {
+    id: "prin-st-004",
+    topic: "Principle Strengthen",
+    set: "Principle Strengthen Homework",
+    pt: "142",
+    section: "1",
+    question: "10",
+    instructions: "Identify the conclusion and evidence first. Match evidence to the IF side and conclusion to the THEN side.",
+    reviewPrompt: "State the rule clearly: If [Evidence], then [Conclusion]. Why was the wrong answer a mismatch?"
+  },
+  {
+    id: "prin-st-005",
+    topic: "Principle Strengthen",
+    set: "Principle Strengthen Homework",
+    pt: "144",
+    section: "2",
+    question: "14",
+    instructions: "Identify the conclusion and evidence first. Match evidence to the IF side and conclusion to the THEN side.",
+    reviewPrompt: "State the rule clearly: If [Evidence], then [Conclusion]. Why was the wrong answer a mismatch?"
+  },
+  // Strengthen Application
+  {
+    id: "str-app-001",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "133",
+    section: "1",
+    question: "18",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-002",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "137",
+    section: "2",
+    question: "8",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-003",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "137",
+    section: "2",
+    question: "25",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-004",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "137",
+    section: "4",
+    question: "8",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-005",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "138",
+    section: "2",
+    question: "5",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-006",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "143",
+    section: "4",
+    question: "19",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-007",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "124",
+    section: "3",
+    question: "25",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  {
+    id: "str-app-008",
+    topic: "Strengthen Application",
+    set: "Strengthen Application Homework",
+    pt: "137",
+    section: "3",
+    question: "20",
+    instructions: "Locate the rule in the stimulus. What condition (trigger) still needs proof?",
+    reviewPrompt: "What condition does the correct answer establish to pull the trigger?"
+  },
+  // Principle Conform
+  {
+    id: "prin-cf-001",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "131",
+    section: "1",
+    question: "9",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-002",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "127",
+    section: "3",
+    question: "23",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-003",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "124",
+    section: "1",
+    question: "17",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-004",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "130",
+    section: "1",
+    question: "21",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-005",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "125",
+    section: "4",
+    question: "17",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-006",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "129",
+    section: "3",
+    question: "14",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-007",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "134",
+    section: "2",
+    question: "22",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  {
+    id: "prin-cf-008",
+    topic: "Principle Conform",
+    set: "Principle Conform Homework",
+    pt: "131",
+    section: "1",
+    question: "17",
+    instructions: "Extract the logic of the rule into a simple 'If X, then Y' statement.",
+    reviewPrompt: "Identify the exact rule language that was triggered."
+  },
+  // Parallel Flaw Bridge
+  {
+    id: "par-fl-001",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "127",
+    section: "3",
+    question: "24",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-002",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "131",
+    section: "2",
+    question: "16",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-003",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "121",
+    section: "4",
+    question: "22",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-004",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "124",
+    section: "3",
+    question: "23",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-005",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "125",
+    section: "4",
+    question: "25",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-006",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "110",
+    section: "2",
+    question: "6",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-007",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "119",
+    section: "2",
+    question: "20",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-008",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "132",
+    section: "2",
+    question: "7",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-009",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "134",
+    section: "3",
+    question: "23",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-010",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "110",
+    section: "3",
+    question: "23",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-011",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "135",
+    section: "1",
+    question: "11",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  },
+  {
+    id: "par-fl-012",
+    topic: "Parallel Flaw",
+    set: "Parallel Flaw Bridge",
+    pt: "102",
+    section: "4",
+    question: "12",
+    instructions: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.'",
+    reviewPrompt: "Write the original argument pattern. Then write why the correct answer matches it."
+  }
+];
+
+export const practiceSets: PracticeSet[] = [
+  {
+    id: "flaw-worksheet-set",
+    title: "Flaw Worksheet",
+    topic: "Flaw",
+    stage: "Foundation",
+    purpose: "Recognize flaw answer-choice wording.",
+    whenToDo: "Day 1",
+    beforeYouStart: [
+      "Do not solve from memory.",
+      "Classify the wording as assumption-style, objection-style, or abstract match."
+    ],
+    questions: [], // Special worksheet in UI
+    reviewInstructions: [
+      "Write the test you would use for each answer choice."
+    ],
+    completionCriteria: [
+      "All wording types identified."
+    ]
+  },
+  {
+    id: "flaw-l1-set",
+    title: "Flaw Progressive Mastery Level 1",
+    topic: "Flaw",
+    stage: "Level 1",
+    purpose: "Basic flaw prediction.",
+    whenToDo: "Day 1",
+    beforeYouStart: [
+      "Write the conclusion and evidence before answering."
+    ],
+    questions: ["flaw-l1-001", "flaw-l1-002", "flaw-l1-003", "flaw-l1-004", "flaw-l1-005"],
+    reviewInstructions: [
+      "Write 'The author’s mistake is ______.' for every miss."
+    ],
+    completionCriteria: [
+      "90% accuracy or full review completed."
+    ]
+  },
+  {
+    id: "flaw-l2-set",
+    title: "Flaw Progressive Mastery Level 2",
+    topic: "Flaw",
+    stage: "Level 2",
+    purpose: "Answer-choice precision.",
+    whenToDo: "Day 4",
+    beforeYouStart: [
+      "Predict the flaw in plain English first."
+    ],
+    questions: ["flaw-l2-001", "flaw-l2-002", "flaw-l2-003", "flaw-l2-004", "flaw-l2-005"],
+    reviewInstructions: [
+      "For the hardest two questions, label each answer choice."
+    ],
+    completionCriteria: [
+      "Completed with logged Precision reviews."
+    ]
+  },
+  {
+    id: "flaw-l3-set",
+    title: "Flaw Progressive Mastery Level 3",
+    topic: "Flaw",
+    stage: "Level 3",
+    purpose: "Harder flaw patterns.",
+    whenToDo: "Day 8",
+    beforeYouStart: [
+      "Slow down on abstract wording."
+    ],
+    questions: ["flaw-l3-001", "flaw-l3-002", "flaw-l3-003", "flaw-l3-004", "flaw-l3-005"],
+    reviewInstructions: [
+      "Explain why the tempting wrong answer was tempting."
+    ],
+    completionCriteria: [
+      "All misses analyzed in Review Log."
+    ]
+  },
+  {
+    id: "flaw-l4-set",
+    title: "Flaw Progressive Mastery Level 4",
+    topic: "Flaw",
+    stage: "Level 4",
+    purpose: "High-difficulty mixed flaw recognition.",
+    whenToDo: "Day 13",
+    beforeYouStart: [
+      "Predict before answer choices."
+    ],
+    questions: ["flaw-l4-001", "flaw-l4-002", "flaw-l4-003", "flaw-l4-004", "flaw-l4-005"],
+    reviewInstructions: [
+      "Redo all misses after 24 hours."
+    ],
+    completionCriteria: [
+      "Level 4 accuracy confirmed."
+    ]
+  },
+  {
+    id: "prin-st-set",
+    title: "Principle Strengthen Homework",
+    topic: "Principle",
+    stage: "Strengthen",
+    purpose: "Matching a rule to an argument.",
+    whenToDo: "Day 3, 5",
+    beforeYouStart: [
+      "Identify conclusion and evidence."
+    ],
+    questions: ["prin-st-001", "prin-st-002", "prin-st-003", "prin-st-004", "prin-st-005"],
+    reviewInstructions: [
+      "Identify rule, trigger, and outcome."
+    ],
+    completionCriteria: [
+      "All rules mapped correctly."
+    ]
+  },
+  {
+    id: "str-app-set",
+    title: "Strengthen Application Homework",
+    topic: "Principle",
+    stage: "Application",
+    purpose: "Proving the missing trigger.",
+    whenToDo: "Day 5, 8",
+    beforeYouStart: [
+      "Locate the rule and ask what condition still needs proof."
+    ],
+    questions: ["str-app-001", "str-app-002", "str-app-003", "str-app-004", "str-app-005", "str-app-006", "str-app-007", "str-app-008"],
+    reviewInstructions: [
+      "Write what condition the correct answer establishes."
+    ],
+    completionCriteria: [
+      "Trigger identification verified."
+    ]
+  },
+  {
+    id: "prin-cf-set",
+    title: "Principle Conform Homework",
+    topic: "Principle",
+    stage: "Conform",
+    purpose: "Applying a rule to a situation.",
+    whenToDo: "Day 9, 10, 11",
+    beforeYouStart: [
+      "Identify the rule’s trigger and outcome."
+    ],
+    questions: ["prin-cf-001", "prin-cf-002", "prin-cf-003", "prin-cf-004", "prin-cf-005", "prin-cf-006", "prin-cf-007", "prin-cf-008"],
+    reviewInstructions: [
+      "Identify exact rule language triggered."
+    ],
+    completionCriteria: [
+      "Fact-to-rule mapping complete."
+    ]
+  },
+  {
+    id: "par-fl-bridge-set",
+    title: "Parallel Flaw Bridge",
+    topic: "Parallel Flaw",
+    stage: "Bridge",
+    purpose: "Matching structure, not topic.",
+    whenToDo: "Day 11, 14",
+    beforeYouStart: [
+      "Write the original argument pattern."
+    ],
+    questions: ["par-fl-001", "par-fl-002", "par-fl-003", "par-fl-004", "par-fl-005", "par-fl-006", "par-fl-007", "par-fl-008", "par-fl-009", "par-fl-010", "par-fl-011", "par-fl-012"],
+    reviewInstructions: [
+      "Write 'The author concludes X because Y, but assumes Z.'"
+    ],
+    completionCriteria: [
+      "Pattern matching mastery verified."
+    ]
+  },
+  {
+    id: "timed-lr-set",
+    title: "Timed LR Section",
+    topic: "Timed LR",
+    stage: "Maintenance",
+    purpose: "Expose weak spots under pressure.",
+    whenToDo: "Day 6, 12",
+    beforeYouStart: [
+      "Use normal timing (35 mins)."
+    ],
+    questions: [], // Reference full sections
+    reviewInstructions: [
+      "Review missed, flagged, Flaw, Principle, and two-choice questions."
+    ],
+    completionCriteria: [
+      "Full section reviewed."
+    ]
+  },
+  {
+    id: "rc-passage-set",
+    title: "Untimed RC Passage Review",
+    topic: "RC",
+    stage: "Maintenance",
+    purpose: "Keep RC accuracy active.",
+    whenToDo: "Day 13",
+    beforeYouStart: [
+      "Read for structure."
+    ],
+    questions: [], // Reference full passages
+    reviewInstructions: [
+      "Find the exact line support for every missed answer."
+    ],
+    completionCriteria: [
+      "Structural mapping complete."
+    ]
+  }
+];
+
+export const flashcards: Flashcard[] = [
+  // Flaw
+  { id: "f-1", topic: "Flaw", tag: "Basics", front: "What is a Flaw question asking?", back: "It asks for the logical error in the transition from evidence to conclusion. It’s not asking if the facts are true, but why they don’t prove the goal." },
+  { id: "f-2", topic: "Flaw", tag: "Basics", front: "What is the four-step Flaw method?", back: "1. Conclusion. 2. Evidence. 3. Assumption (Gap). 4. Predict the Flaw." },
+  { id: "f-3", topic: "Flaw", tag: "Style", front: "What is an assumption-style answer?", back: "An answer that describes what the author needed but didn’t say. (Uses: 'assumes', 'takes for granted')" },
+  { id: "f-4", topic: "Flaw", tag: "Style", front: "What is an objection-style answer?", back: "An answer that describes a possibility the author ignored. (Uses: 'fails to consider', 'overlooks')" },
+  { id: "f-5", topic: "Flaw", tag: "Style", front: "What is an abstract match answer?", back: "An answer that uses logic jargon to describe the movement. (Uses: 'infers a X from Y')" },
+  { id: "f-6", topic: "Flaw", tag: "Test", front: "What is the negation test for assumption-style Flaw answers?", back: "If you make the answer false and the argument dies, it’s a necessary assumption of the author." },
+  { id: "f-7", topic: "Flaw", tag: "Test", front: "What is the truth test for objection-style Flaw answers?", back: "If you treat the answer as true and the conclusion gets weaker, it’s a valid objection." },
+  { id: "f-8", topic: "Flaw", tag: "Trap", front: "What is a too-strong trap?", back: "An answer using extreme words (always, never) when the argument only needed a likely or possible connection." },
+  { id: "f-9", topic: "Flaw", tag: "Trap", front: "What is a wrong-flaw trap?", back: "Describing a real logical error (like circular reasoning) that simply didn't happen in this specific story." },
+  { id: "f-10", topic: "Flaw", tag: "Trap", front: "What is reversed logic?", back: "Using the right facts but flipping the direction of the error (e.g., A confuses for B instead of B for A)." },
+  { id: "f-11", topic: "Flaw", tag: "Concepts", front: "What is a causal flaw?", back: "Assuming correlation implies causation, or ignoring alternative causes." },
+  { id: "f-12", topic: "Flaw", tag: "Concepts", front: "What is a necessary vs sufficient flaw?", back: "Treating a requirement as enough to guarantee an outcome." },
+  { id: "f-13", topic: "Flaw", tag: "Concepts", front: "What is a part vs whole flaw?", back: "Assuming what’s true of the parts is true of the collective, or vice versa." },
+  { id: "f-14", topic: "Flaw", tag: "Concepts", front: "What is unproven vs false?", back: "Thinking that a lack of evidence for X proves that X is false." },
+  { id: "f-15", topic: "Flaw", tag: "Concepts", front: "What is a sampling flaw?", back: "Generalizing from an unrepresentative or biased group." },
+
+  // Principle
+  { id: "p-1", topic: "Principle", tag: "Basics", front: "What is a Principle question?", back: "A question about general rules or logical standards that govern specific situations." },
+  { id: "p-2", topic: "Principle", tag: "Framework", front: "What are the four parts of the Principle framework?", back: "1. Rule. 2. Trigger. 3. Application. 4. Outcome." },
+  { id: "p-3", topic: "Principle", tag: "Framework", front: "What is the rule?", back: "The general 'If... then' standard being discussed." },
+  { id: "p-4", topic: "Principle", tag: "Framework", front: "What is the trigger?", back: "The 'If' part; the condition that must be met to activate the rule." },
+  { id: "p-5", topic: "Principle", tag: "Framework", front: "What is the application?", back: "The specific case or set of facts we are testing." },
+  { id: "p-6", topic: "Principle", tag: "Framework", front: "What is the outcome?", back: "The 'Then' part; the result required if the trigger is met." },
+  { id: "p-7", topic: "Principle", tag: "Types", front: "What is Principle Strengthen?", back: "Giving a rule that connects the stimulus facts to the conclusion." },
+  { id: "p-8", topic: "Principle", tag: "Types", front: "What is Strengthen Application?", back: "Providing the missing fact to trigger a rule already stated." },
+  { id: "p-9", topic: "Principle", tag: "Types", front: "What is Principle Conform?", back: "Finding a situation that obeys the logical movement of the stimulus rule." },
+  { id: "p-10", topic: "Principle", tag: "Concepts", front: "What is an implicit principle?", back: "A rule that isn't stated but is required for the argument to make sense." },
+  { id: "p-11", topic: "Principle", tag: "Trap", front: "What does too broad mean?", back: "A rule that covers many cases but doesn't specifically help the stimulus bridge." },
+  { id: "p-12", topic: "Principle", tag: "Trap", front: "What does too narrow mean?", back: "A rule that only covers part of the stimulus gap or adds irrelevant conditions." },
+  { id: "p-13", topic: "Principle", tag: "Trap", front: "What is a rule mismatch?", back: "The answer uses the right topics but the wrong logical relationship (flips trigger/outcome)." },
+  { id: "p-14", topic: "Principle", tag: "Trap", front: "What is the missing trigger problem?", back: "Concluding the outcome happens without proving the required trigger facts." },
+  { id: "p-15", topic: "Principle", tag: "Review", front: "What is the review template for Principle questions?", back: "Map: Rule -> Trigger -> Application -> Outcome. Find exactly where the match failed." },
+
+  // Parallel Flaw
+  { id: "pa-1", topic: "Parallel Flaw", tag: "Goal", front: "What is the goal of Parallel Flaw?", back: "To find an argument with the same logical structure and error as the stimulus." },
+  { id: "pa-2", topic: "Parallel Flaw", tag: "Trap", front: "Why should you not match by topic?", back: "The LSAT uses similar topics to distract. Structure and force are what matter, not subject matter." },
+  { id: "pa-3", topic: "Parallel Flaw", tag: "Method", front: "What sentence should you write before answer choices?", back: "'The author concludes X because Y, but assumes Z.' (The exact flawed bridge)." },
+  { id: "pa-4", topic: "Parallel Flaw", tag: "Concepts", front: "What does structure matching mean?", back: "Matching the type of evidence (conditional, causal, comparison) used to reach the goal." },
+  { id: "pa-5", topic: "Parallel Flaw", tag: "Concepts", front: "What is logical force matching?", back: "Ensuring the conclusion strength (some vs all) matches the original." },
+
+  // Review
+  { id: "r-1", topic: "Review", tag: "Wait", front: "What should you write for a missed Flaw question?", back: "Conclusion, Evidence, Assumption, Plain English Flaw, and why the trap was tempting." },
+  { id: "r-2", topic: "Review", tag: "Wait", front: "What should you write for a missed Principle question?", back: "The Trigger fact I missed, or why the rule was a logical mismatch." },
+  { id: "r-3", topic: "Review", tag: "Wait", front: "What should you write for a missed Parallel Flaw question?", back: "The flawed bridge sentence and why the wrong answer changed that bridge." },
+  { id: "r-4", topic: "Review", tag: "Queue", front: "What belongs in the redo queue?", back: "Any question you missed, guessed on, or felt slow solving." },
+  { id: "r-5", topic: "Review", tag: "Lesson", front: "What does 'next time I need to notice' mean?", back: "A specific trigger wording or pattern you missed (e.g., 'only if' reversal)." }
+];
+
 export type StudyResource = {
   id: string;
   title: string;
@@ -418,163 +1274,92 @@ export const flawHubData = {
   styles: [
     {
       id: "assumption",
-      style: "Assumption style",
-      meaning: "This answer describes something the author is relying on without proving it. The answer often sounds like a hidden belief or unstated bridge.",
-      language: ["assumes", "presumes", "takes for granted", "fails to establish", "relies on"],
-      test: "Make the answer false (Negate it). If making it false makes the argument collapse, the answer is likely correct.",
-      correctBehavior: "It identifies something the author absolutely needed for the argument to work.",
-      wrongBehavior: "It may describe something helpful, but not necessary. It may also be too strong for what the author actually needs.",
-      studentTest: "Would the argument still work if this were false?",
-      reviewPrompt: "The author needed to assume ______ because without it ______.",
+      style: "Assumption (Bridge)",
+      meaning: "The author leaves a gap and assumes you'll accept an unstated link. They treat weightless premises as if they prove the conclusion.",
+      language: ["takes for granted", "assumes", "presumes", "relies on the unstated premise"],
+      test: "Negation: If you make this answer false, does the whole argument die? If yes, it's the assumption.",
+      correctBehavior: "It identifies the exact missing piece of the logical bridge.",
+      wrongBehavior: "It describes a helpful fact that isn't strictly necessary for the conclusion.",
+      studentTest: "Did the author NEED this to be true for the argument to not crash?",
+      reviewPrompt: "The author assumes ______ is true, but they never prove it in the text.",
     },
     {
       id: "objection",
-      style: "Objection style",
-      meaning: "This answer describes a possibility the author failed to consider. It introduces an alternative explanation, exception, or overlooked case.",
-      language: ["fails to consider", "overlooks", "ignores", "neglects", "does not rule out"],
-      test: "Treat the answer as true. If it makes the author's conclusion less secure (weakens it), it is likely pointing to the flaw.",
-      correctBehavior: "It introduces a possibility that would make the author's conclusion less likely to be true.",
-      wrongBehavior: "It may be a possible fact, but it's irrelevant to the specific logic or doesn't actually weaken the conclusion.",
-      studentTest: "If this possibility were true, would the argument become weaker?",
-      reviewPrompt: "The author overlooked the possibility that ______.",
+      style: "Possibility (Counter)",
+      meaning: "The author ignored a real-world scenario that ruins their argument. They failed to 'clear the path' of obstacles.",
+      language: ["fails to consider", "overlooks the possibility that", "ignores the prospect that"],
+      test: "Weakening: If you add this answer as a fact, does it make the conclusion look foolish? If yes, it's the flaw.",
+      correctBehavior: "It introduces a hurdles the author didn't jump over.",
+      wrongBehavior: "It introduces a fact that is irrelevant or actually supports the author.",
+      studentTest: "If this scenario exists, is the conclusion now structurally weaker?",
+      reviewPrompt: "The author fails to account for the damaging possibility that ______.",
     },
     {
       id: "abstract",
-      style: "Abstract match style",
-      meaning: "This answer describes the argument's structure in general, logical language. You have to 'translate' these words back into the specific topic.",
-      language: ["concludes X from Y", "confuses X with Y", "infers that", "treats one thing as another", "bases a conclusion on"],
-      test: "Plug the stimulus terms into the answer description. Every word in the answer must match a movement in the stimulus.",
-      correctBehavior: "It accurately describes the exact movement from evidence to conclusion using logic-jargon.",
-      wrongBehavior: "It might sound 'smart' but describe the wrong evidence, the wrong conclusion, or a logical error that didn't happen.",
-      studentTest: "Can I plug the stimulus terms into this answer choice exactly?",
-      reviewPrompt: "The answer describes the argument because the author moved from ______ to ______.",
+      style: "Abstract Description",
+      meaning: "A purely structural description using logical terms (like 'Necessary/Sufficient' or 'Unrepresentative Sample').",
+      language: ["confuses a condition that is required for one that is enough", "bases a generalization on a sample that is likely to be unrepresentative"],
+      test: "Substitution: Can you replace the 'fancy' words with specific parts of the story? If the map is 1:1, it's right.",
+      correctBehavior: "It is a dry, literal description of the logical machine's error.",
+      wrongBehavior: "It sounds smart but describes a movement that didn't actually happen in the text.",
+      studentTest: "Can I point at the part of the argument that matches EVERY word in this answer?",
+      reviewPrompt: "The answer describes the movement from ______ to ______ correctly.",
     },
   ],
   miniDrill: [
-    { stem: "Takes for granted that X", style: "Assumption style", why: "Uses 'takes for granted' which implies a required but unstated belief." },
-    { stem: "Fails to consider that Y", style: "Objection style", why: "Uses 'fails to consider' which points to an ignored alternative possibility." },
-    { stem: "Presumes that X", style: "Assumption style", why: "Presuming is the same as assuming without proof." },
-    { stem: "Overlooks the possibility that Y", style: "Objection style", why: "Explicitly mentions an overlooked possibility." },
-    { stem: "Concludes X from evidence that only supports Y", style: "Abstract match style", why: "Describes the relationship between evidence and conclusion in abstract terms." },
-    { stem: "Treats a necessary condition as sufficient", style: "Abstract match style", why: "Describes a logical error (Necessary vs Sufficient) using general terminology." },
+    { stem: "Takes for granted that X", style: "Assumption (Bridge)", why: "Uses 'takes for granted' which implies an unproven requirement." },
+    { stem: "Fails to consider that Y", style: "Possibility (Counter)", why: "Uses 'fails to consider' which points to an ignored alternative." },
+    { stem: "Treats a necessary condition as sufficient", style: "Abstract Description", why: "Describes a logical error using general terminology." },
   ],
   traps: [
     {
-      trap: "Too strong",
-      meaning: "The answer uses extreme language (always, never, only) when the argument doesn't need that much power.",
-      trick: "It sounds right but 'negating' it doesn't break the argument because the author didn't need it to be *that* extreme.",
-      avoid: "Check for high-force words in the answer and match them to the force of the stimulus.",
+      trap: "The 'Right Flaw, Wrong Story'",
+      meaning: "Names a real logical error (like Correlation) that simply didn't happen in *this* argument.",
+      trick: "Uses familiar logic terms to trigger your 'I know this!' reflex.",
+      avoid: "Double-check: Did they actually use a link to prove a cause? If not, it's a trap.",
     },
     {
-      trap: "Wrong flaw",
-      meaning: "The answer describes a REAL logical flaw that just didn't happen in this specific argument.",
-      trick: "You recognize the flaw from your notes, so you pick it even though it doesn't fit the facts.",
-      avoid: "Ask yourself: 'Did this EXACT error happen here, or am I just happy I know what a circular argument is?'",
+      trap: "The 'Satisfying Objection'",
+      meaning: "Provides a counter-fact that sounds smart but doesn't hit the author's logic gap.",
+      trick: "Appeals to your real-world 'common sense' or personal feelings about the topic.",
+      avoid: "Ask: 'Even if this is true, does it actually break the logical LINK or just the story?'",
     },
     {
-      trap: "Reversed logic",
-      meaning: "The answer uses the right concepts from the story but flips the direction of the error.",
-      trick: "It says the author confused A for B, when the author actually confused B for A.",
-      avoid: "Slow down and map the 'from' and 'to' in the answer choice.",
-    },
-    {
-      trap: "Irrelevant",
-      meaning: "The answer brings up something that is true in the real world but doesn't affect the link between the evidence and conclusion.",
-      trick: "It sounds like a smart objection, but the author could say 'So what? That doesn't change my point.'",
-      avoid: "Always stay inside the 'bubble' of the evidence and conclusion.",
-    },
-    {
-      trap: "Contradicted",
-      meaning: "The answer claims the author ignored something that was actually stated in the stimulus.",
-      trick: "It's a fast read error. You missed the one sentence where the author addressed that point.",
-      avoid: "Before picking an 'ignores' answer, double-check that the author really didn't say it.",
-    },
-    {
-      trap: "Describes something true but not flawed",
-      meaning: "The answer accurately describes part of the argument, but what it describes isn't a mistake.",
-      trick: "You see the author did 'X', and the answer says the author did 'X'. You pick it because it's true.",
-      avoid: "Is doing 'X' actually a mistake here? Accuracy is not the same as flaw-mapping.",
-    },
-    {
-      trap: "Attacks the topic",
-      meaning: "The answer attacks the subject matter or the person instead of the logic.",
-      trick: "It feels satisfying to disagree with the content, so you pick the answer that sounds most critical.",
-      avoid: "Stay focused on the *structure* of the reasoning, not the *vibe* of the topic.",
+      trap: "Force Mismatch",
+      meaning: "The answer is much 'stronger' (always/all) than the argument's conclusion allows.",
+      trick: "Matches the topic but overstates the logical force needed to fix/break it.",
+      avoid: "Match the 'temperature' of the answer choice to the 'temperature' of the conclusion.",
     },
   ],
   famousFlaws: [
     {
-      flaw: "Necessary vs. sufficient",
-      meaning: "Confusing what is REQUIRED with what is ENOUGH.",
-      spot: "'Only if', 'required', 'needs', 'is all that is needed'.",
-      ask: "Did the author assume that because a requirement was met, the outcome MUST happen?",
-      trap: "Incorrectly identifying which side is necessary.",
+      flaw: "Necessary vs Sufficient",
+      meaning: "Confusing what is needed (Necessary) with what is enough (Sufficient).",
+      spot: "Conclusion is a 'Must' statement based on meeting a 'Might' condition.",
+      ask: "Just because A gives us B, does B have to have come from A?",
+      do: "Identify the Reversal Error or the Negation Error."
     },
     {
-      flaw: "Causal reasoning",
-      meaning: "Assuming one thing caused another just because they happened together.",
-      spot: "'Caused', 'results in', 'leads to', 'responsible for'.",
-      ask: "Could there be an alternative cause, a reversed cause, or just a coincidence?",
-      trap: "Misinstrumentalizing correlation as causation.",
+      flaw: "Correlation vs Causation",
+      meaning: "Assuming a timing link proves a physical link.",
+      spot: "Two things happened at the same time or in a sequence.",
+      ask: "Could it be a Reverse Cause? A Third Fact (Z)? Or just Coincidence?",
+      do: "Focus on the mechanism. Is there any evidence for 'HOW' it caused it?"
     },
     {
-      flaw: "Part vs. whole",
-      meaning: "Assuming what is true of a member is true of the group (or vice versa).",
-      spot: "Distinction between 'average', 'each', 'collective', 'individual'.",
-      ask: "Is the characteristic of the parts actually transferable to the entity?",
-      trap: "Ignoring that a whole can have properties its parts don't (and vice versa).",
-    },
-    {
-      flaw: "Unproven vs. false",
-      meaning: "Thinking that because someone failed to prove X, then X must be false.",
-      spot: "'No evidence', 'failed to show', 'not established'.",
-      ask: "Did the author treat a lack of proof as proof of the opposite?",
-      trap: "Assuming 'not proven' means 'proven not'.",
-    },
-    {
-      flaw: "Sampling",
-      meaning: "Generalizing from a biased or small sample.",
-      spot: "Surveys, polls, specific subgroups used to describe a whole population.",
-      ask: "Is this sample representative of the group as a whole?",
-      trap: "Generalizing from a sample that is too small or unrepresentative.",
-    },
-    {
-      flaw: "Ad hominem",
-      meaning: "Attacking the person's character instead of their argument.",
-      spot: "Criticizing motivations, history, or personality of the speaker.",
-      ask: "Even if the person is bad, does that make their logic wrong?",
-      trap: "Focusing on the person's bias rather than the evidence presented.",
-    },
-    {
-      flaw: "Circular reasoning",
-      meaning: "Assuming what you are trying to prove in your premises.",
-      spot: "The conclusion and premise are just rewordings of each other.",
-      ask: "Does the argument give any independent support, or just repeat itself?",
-      trap: "Picking this for every 'bad' argument. It's actually very rare on the LSAT.",
-    },
-    {
-      flaw: "Equivocation",
-      meaning: "Using a word in two different ways.",
-      spot: "A key term (like 'public' or 'interest') shifts meaning between sentences.",
-      ask: "Is the word used in one sense in the evidence and a different sense in the conclusion?",
-      trap: "Assuming every vague word is an equivocation.",
-    },
-    {
-      flaw: "Appeal problem",
-      meaning: "Relying on popularity or irrelevant authority.",
-      spot: "'Most people believe', 'one expert said', 'it's tradition'.",
-      ask: "Is the authority actually relevant to the specific topic?",
-      trap: "Confusing popularity with truth.",
-    },
+      flaw: "Sampling Bias",
+      meaning: "Assuming a weird group represents a normal group.",
+      spot: "Surveys, tiny subgroups, or 'extreme' cases representing the 'average'.",
+      ask: "Is the subject of the evidence fundamentally different from the subject of the conclusion?",
+      do: "Check if the group used for the 'stat' matches the group used for the 'claim'."
+    }
   ],
   reviewTemplate: [
-    { label: "Conclusion", prompt: "What was the author trying to prove?" },
-    { label: "Evidence", prompt: "What support did they actually give?" },
-    { label: "Assumption", prompt: "What did the author need to be true that they didn't prove?" },
-    { label: "Flaw", prompt: "Why is that assumption vulnerable in plain English?" },
-    { label: "The Trap", prompt: "Why was my wrong answer tempting? (Too strong? Wrong flaw?)" },
-    { label: "The Win", prompt: "Why is the correct answer better than my choice?" },
-    { label: "Takeaway", prompt: "Next time I see this pattern, I need to notice ______." },
+    { label: "Ref", prompt: "PT/Section/Question #" },
+    { label: "The Gap", prompt: "Just because [Evidence], that doesn't mean [Conclusion] because..." },
+    { label: "Target style", prompt: "Is the answer naming an Assumption, an Objection, or a Structural movement?" },
+    { label: "My Trap", prompt: "Why did my chosen answer look right? (Usually: I bought the story/vibe)." },
+    { label: "Takeaway", prompt: "Next time I see [Feature], I will [Action]." }
   ],
   // ... (rest of the drills etc)
   worksheet: [
@@ -628,66 +1413,55 @@ export const flawHubData = {
 };
 
 export const principleHubData = {
-  intro: "Principle questions are about rules. The task is to figure out which rule applies, justifies, or matches the situation.",
+  intro: "Principle questions bridge abstract laws and concrete stories. You have to match the 'Skeleton' of the logic.",
   varieties: [
-    { t: "Rule in Answers", d: "Sometimes the rule is in the answer choices." },
-    { t: "Rule in Stimulus", d: "Sometimes the rule is in the stimulus." },
-    { t: "Justify", d: "Sometimes the answer must justify the reasoning." },
-    { t: "Apply", d: "Sometimes the answer must apply the rule." },
-    { t: "Conform", d: "Sometimes the answer must conform to the rule." },
+    { t: "Strengthen", d: "Fix a broken argument by adding a required law." },
+    { t: "Conform", d: "Identify the general rule that matches the specific story." },
+    { t: "Application", d: "Apply a given rule to a new set of facts." },
+    { t: "Parallel Flaw Bridge", d: "Match the underlying structural error of a principle." }
   ],
   framework: [
-    { t: "Rule", d: "The general standard or law.", detail: "Look for 'if... then' patterns or broad ethical statements." },
-    { t: "Trigger", d: "The condition that activates the rule.", detail: "This is the 'if' part. Does the scenario meet this condition?" },
-    { t: "Application", d: "The specific situation or case.", detail: "The facts you are testing against the rule." },
-    { t: "Outcome", d: "The result the rule requires or allows.", detail: "The 'then' part. Is this the result the conclusion reached?" },
+    { t: "The Trigger (If)", d: "The condition that must happen first.", detail: "If a meal costs >$50..." },
+    { t: "The Outcome (Then)", d: "The mandatory result.", detail: "...then you MUST leave a 20% tip." },
+    { t: "Reversion Trap", d: "Results don't prove triggers.", detail: "Leaving a 20% tip does NOT prove the meal was >$50." },
+    { t: "Identity Match", d: "Words must be logical synonyms.", detail: "Does 'over $50' match 'expensive' in the story?" }
   ],
   majorTypes: [
     {
       type: "Principle Strengthen",
-      meaning: "The answer supplies a rule that makes the argument work.",
-      question: "What rule would connect the evidence to the conclusion?",
-      spot: "justifies, most helps to justify, if valid... reasoning is correct",
-      strategy: "Treat the answer as the 'Missing Premise'. Match evidence to the IF side and the conclusion to the THEN side. The rule must be STRONG.",
-      mistake: "Picking a rule that matches the topic but doesn't actually connect the evidence to the conclusion.",
-    },
-    {
-      type: "Strengthen Application",
-      meaning: "The rule already exists (in the stimulus). The answer shows the trigger has been met.",
-      question: "What specific fact (trigger) still needs to be proven?",
-      spot: "the principle stated above, the application of the rule, correctly applied",
-      strategy: "Find the stated rule first. Identify the 'Trigger' condition. Search for the answer that provides the facts needed to pull that trigger.",
-      mistake: "Picking a fact that sounds helpful but doesn't satisfy the exact wording of the trigger.",
+      meaning: "Plug a structural hole with a general rule.",
+      spot: "Which principle, if valid, most helps to justify the reasoning?",
+      question: "If I add this law to the evidence, is the conclusion now bulletproof?",
+      strategy: "The rule MUST bridge the Gap (Conclusion -> Evidence). Cross out any rule that doesn't name BOTH parts.",
+      mistake: "Picking a rule that matches the story but isn't relevant to the actual jump in logic."
     },
     {
       type: "Principle Conform",
-      meaning: "The answer must match or obey the rule given.",
-      question: "Does this situation actually trigger the rule and produce the right outcome?",
-      spot: "conform to, principle, illustrative of, matches the rule",
-      strategy: "Extract the logic of the rule into a simple 'If X, then Y' statement. Reject any answer where X isn't true or Y doesn't happen.",
-      mistake: "Applying the rule to a situation that looks similar but doesn't actually meet the trigger conditions.",
+      meaning: "Map a specific story to its underlying 'Law'.",
+      spot: "The situation described above most closely conforms to which of the following principles?",
+      question: "Is the stimulus a valid example of this general rule?",
+      strategy: "Facts -> Rule. The 'Trigger' of the rule must be something that was 100% true in the story.",
+      mistake: "Picking a law where the story matches the 'result' but not the 'trigger'."
     },
     {
       type: "Parallel Flaw Bridge",
-      meaning: "This is where Flaw becomes structure matching. You must match the logical pattern.",
-      question: "Which of these follows the same flawed movement?",
-      spot: "pattern of reasoning, logical error, parallel to",
-      strategy: "Identify the Flaw first. State it as a 'Bridge' sentence: 'The author concludes X because Y, but assumes Z.' Find the answer with the same bridge.",
-      mistake: "Matching the TOPIC (e.g., both are about medicine) instead of the structure of the reasoning.",
-    },
+      meaning: "Match the exact 'shape' of a broken principle.",
+      spot: "Which most closely parallels the flawed reasoning above?",
+      question: "Is the 'error movement' in this answer identical to the one in the stimulus?",
+      strategy: "Ignore the story. Map the arrows. Reversal? Negation? Shift in meaning? The answer must replicate the shift.",
+      mistake: "Matching the topic (e.g. both about science) instead of the arrow direction."
+    }
   ],
   practiceConnections: [
     { type: "Principle Strengthen", resources: ["Principle Strengthen Homework", "Strengthen Application Homework"] },
     { type: "Principle Conform", resources: ["Principle Conform Homework"] }
   ],
   reviewTemplate: [
-    { label: "Rule", prompt: "What was the general rule involved?" },
-    { label: "Trigger", prompt: "What was the condition that activates it?" },
-    { label: "Application", prompt: "How did the facts of the story fit the rule?" },
-    { label: "Outcome", prompt: "What result did the rule produce?" },
-    { label: "Missing Link", prompt: "What gap was the principle trying to fill?" },
-    { label: "Mismatch", prompt: "Why did my wrong answer choice not fit the framework?" },
-    { label: "Final Lesson", prompt: "Next time I map a principle, I need to check ______." },
+    { label: "Ref", prompt: "PT/Section/Question #" },
+    { label: "Skeleton", prompt: "If [Trigger Fact] then [Required Outcome]" },
+    { label: "Trigger Error", prompt: "Did I pick a rule where the 'if' condition wasn't actually met?" },
+    { label: "Direction", prompt: "Did I fall for a reversal (matching the then, not the if)?" },
+    { label: "Takeaway", prompt: "Check the 'if' condition before looking at the 'then' result." }
   ],
   wrongPatterns: [
     { pattern: "Too broad", catch: "The rule would cover more cases than the argument needs." },

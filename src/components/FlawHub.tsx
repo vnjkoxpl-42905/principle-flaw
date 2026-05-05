@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { flawHubData } from '../data';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { CheckCircle2, AlertCircle, Info, Map, Terminal, ListChecks, HelpCircle, ArrowRight, BookOpen, Download, Table } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Info, Map, Terminal, ListChecks, HelpCircle, ArrowRight, BookOpen, Download, Table, Zap, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export const Section = ({ title, icon: Icon, children, step, id }: { title: string, icon: any, children: React.ReactNode, step?: string, id?: string }) => (
+const Section = ({ title, icon: Icon, children, step, id }: { title: string, icon: any, children: React.ReactNode, step?: string, id?: string }) => (
     <div className="space-y-4 scroll-mt-24" id={id}>
       <div className="flex items-center justify-between border-b border-white/[0.03] pb-2">
         <div className="flex items-center gap-3">
@@ -171,6 +171,33 @@ export default function FlawHub() {
 
   return (
     <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      {/* Daily Audit Section */}
+      <div className="p-1 rounded-[32px] bg-gradient-to-br from-emerald-500/20 to-transparent">
+        <div className="bg-zinc-950 rounded-[31px] p-8 md:p-12 space-y-8 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="relative z-10 space-y-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+                <Zap size={20} />
+              </div>
+              <h2 className="text-3xl font-serif italic text-white">Daily Flaw Action</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { title: "Read", detail: "The 4-Step Method below. Don't skip the 'Plain English' translation." },
+                { title: "Drill", detail: "Classify 10 answer stems using the Mini-Drill below until you hit 100% accuracy." },
+                { title: "Review", detail: "Log every 'Wrong Flaw' trap you fell for today. Pattern match the language." }
+              ].map((item, i) => (
+                <div key={i} className="p-6 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-2">
+                  <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">0{i+1}. {item.title}</span>
+                  <p className="text-xs text-zinc-400 font-light leading-relaxed">{item.detail}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Section title="What Flaw questions ask" icon={Info} step="Introduction" id="flaw-intro">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <div className="space-y-6">

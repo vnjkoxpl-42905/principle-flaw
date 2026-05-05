@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Calendar, CheckSquare, FileText, LayoutDashboard, Printer, User, Target } from 'lucide-react';
+import { BookOpen, Calendar, CheckSquare, FileText, LayoutDashboard, Printer, User, Target, Zap } from 'lucide-react';
 import Overview from './components/Overview';
 import TodayView from './components/TodayView';
 import Schedule from './components/Schedule';
@@ -14,10 +14,11 @@ import Practice from './components/Practice';
 import ReviewLog from './components/ReviewLog';
 import WelcomeScreen from './components/WelcomeScreen';
 import Profile from './components/Profile';
+import FlashcardsView from './components/Flashcards';
 import { StudyResource } from './data';
 import { ElegantShape } from './components/ui/shape-landing-hero';
 
-export type Tab = 'start' | 'today' | 'schedule' | 'learn' | 'practice' | 'review' | 'profile';
+export type Tab = 'start' | 'today' | 'schedule' | 'learn' | 'practice' | 'flashcards' | 'review' | 'profile';
 
 export default function App() {
   const [userName, setUserName] = useState<string | null>(null);
@@ -144,6 +145,7 @@ export default function App() {
               <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Training</span>
             </div>
             <NavItem icon={<FileText size={16} />} label="Learn" active={activeTab === 'learn'} onClick={() => setTabAndScroll('learn')} />
+            <NavItem icon={<Zap size={16} />} label="Flashcards" active={activeTab === 'flashcards'} onClick={() => setTabAndScroll('flashcards')} />
             <NavItem icon={<Target size={16} />} label="Practice" active={activeTab === 'practice'} onClick={() => setTabAndScroll('practice')} />
             <NavItem icon={<BookOpen size={16} />} label="Review Log" active={activeTab === 'review'} onClick={() => setTabAndScroll('review')} />
           </nav>
@@ -190,6 +192,7 @@ export default function App() {
               </optgroup>
               <optgroup label="Training">
                 <option value="learn">Learn</option>
+                <option value="flashcards">Flashcards</option>
                 <option value="practice">Practice</option>
                 <option value="review">Review Log</option>
               </optgroup>
@@ -210,6 +213,7 @@ export default function App() {
               />
             )}
             {activeTab === 'practice' && <Practice currentDay={currentDay} onOpenResource={navigateToResource} />}
+            {activeTab === 'flashcards' && <FlashcardsView />}
             {activeTab === 'review' && <ReviewLog />}
             {activeTab === 'profile' && <Profile currentName={userName} onUpdateName={handleSaveName} onReset={handleReset} />}
           </div>
