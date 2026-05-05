@@ -5,19 +5,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BookOpen, Calendar, CheckSquare, FileText, LayoutDashboard, Printer, User } from 'lucide-react';
+import { BookOpen, Calendar, CheckSquare, FileText, LayoutDashboard, Printer, User, Target } from 'lucide-react';
 import Overview from './components/Overview';
 import TodayView from './components/TodayView';
 import Schedule from './components/Schedule';
-import FlawHub from './components/FlawHub';
-import PrincipleHub from './components/PrincipleHub';
+import Learn from './components/Learn';
+import Practice from './components/Practice';
 import ReviewLog from './components/ReviewLog';
 import WelcomeScreen from './components/WelcomeScreen';
 import Profile from './components/Profile';
 
 import { ElegantShape } from './components/ui/shape-landing-hero';
 
-export type Tab = 'overview' | 'today' | 'schedule' | 'flaw' | 'principle' | 'review' | 'profile';
+export type Tab = 'start' | 'today' | 'schedule' | 'learn' | 'practice' | 'review' | 'profile';
 
 export default function App() {
   const [userName, setUserName] = useState<string | null>(null);
@@ -108,17 +108,17 @@ export default function App() {
           </div>
           <nav className="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
             <div className="pb-3 px-3">
-              <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Main Dashboard</span>
+              <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Plan</span>
             </div>
-            <NavItem icon={<CheckSquare size={16} />} label="Today View" active={activeTab === 'today'} onClick={() => setTabAndScroll('today')} />
-            <NavItem icon={<Calendar size={16} />} label="14-Day Schedule" active={activeTab === 'schedule'} onClick={() => setTabAndScroll('schedule')} />
-            <NavItem icon={<LayoutDashboard size={16} />} label="Overview" active={activeTab === 'overview'} onClick={() => setTabAndScroll('overview')} />
+            <NavItem icon={<LayoutDashboard size={16} />} label="Start Here" active={activeTab === 'start'} onClick={() => setTabAndScroll('start')} />
+            <NavItem icon={<CheckSquare size={16} />} label="Today" active={activeTab === 'today'} onClick={() => setTabAndScroll('today')} />
+            <NavItem icon={<Calendar size={16} />} label="Schedule" active={activeTab === 'schedule'} onClick={() => setTabAndScroll('schedule')} />
             
             <div className="pt-8 pb-3 px-3">
-              <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Training Hubs</span>
+              <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Training</span>
             </div>
-            <NavItem icon={<FileText size={16} />} label="Flaw Hub" active={activeTab === 'flaw'} onClick={() => setTabAndScroll('flaw')} />
-            <NavItem icon={<FileText size={16} />} label="Principle Hub" active={activeTab === 'principle'} onClick={() => setTabAndScroll('principle')} />
+            <NavItem icon={<FileText size={16} />} label="Learn" active={activeTab === 'learn'} onClick={() => setTabAndScroll('learn')} />
+            <NavItem icon={<Target size={16} />} label="Practice" active={activeTab === 'practice'} onClick={() => setTabAndScroll('practice')} />
             <NavItem icon={<BookOpen size={16} />} label="Review Log" active={activeTab === 'review'} onClick={() => setTabAndScroll('review')} />
           </nav>
 
@@ -132,14 +132,14 @@ export default function App() {
               }`}
             >
               <User size={16} />
-              <span>Student Profile</span>
+              <span>Profile</span>
             </button>
             <button
               onClick={() => window.print()}
               className="flex items-center gap-3 w-full px-3 py-2 text-xs text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900/50 rounded-lg transition-all"
             >
               <Printer size={16} />
-              <span>Export as PDF</span>
+              <span>Print / Save PDF</span>
             </button>
           </div>
         </aside>
@@ -157,14 +157,14 @@ export default function App() {
               onChange={(e) => setTabAndScroll(e.target.value as Tab)}
               className="bg-zinc-900/50 border border-zinc-800 rounded-lg text-xs px-3 py-1.5 text-zinc-300 focus:outline-none focus:ring-1 focus:ring-emerald-500/50"
             >
-              <optgroup label="Dashboard">
-                <option value="today">Today View</option>
+              <optgroup label="Plan">
+                <option value="start">Start Here</option>
+                <option value="today">Today</option>
                 <option value="schedule">Schedule</option>
-                <option value="overview">Overview</option>
               </optgroup>
               <optgroup label="Training">
-                <option value="flaw">Flaw Hub</option>
-                <option value="principle">Principle Hub</option>
+                <option value="learn">Learn</option>
+                <option value="practice">Practice</option>
                 <option value="review">Review Log</option>
               </optgroup>
               <optgroup label="Settings">
@@ -174,11 +174,11 @@ export default function App() {
           </div>
 
           <div className="p-6 sm:p-10 md:p-16 max-w-6xl mx-auto print:max-w-none print:p-0 relative">
-            {activeTab === 'overview' && <Overview userName={userName} onStart={startToday} />}
+            {activeTab === 'start' && <Overview userName={userName} onStart={startToday} />}
             {activeTab === 'today' && <TodayView userName={userName} day={currentDay} setDay={handleSetDay} />}
             {activeTab === 'schedule' && <Schedule />}
-            {activeTab === 'flaw' && <FlawHub />}
-            {activeTab === 'principle' && <PrincipleHub />}
+            {activeTab === 'learn' && <Learn />}
+            {activeTab === 'practice' && <Practice currentDay={currentDay} />}
             {activeTab === 'review' && <ReviewLog />}
             {activeTab === 'profile' && <Profile currentName={userName} onUpdateName={handleSaveName} onReset={handleReset} />}
           </div>

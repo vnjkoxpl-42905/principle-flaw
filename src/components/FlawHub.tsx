@@ -1,219 +1,130 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { flawHubData } from '../data';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { ChevronDown, ChevronRight, AlertOctagon, Zap, ShieldAlert, FileSearch } from 'lucide-react';
+import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
+import { CheckCircle2, AlertCircle, Info, Map, Terminal, ListChecks } from 'lucide-react';
+
+export const Section = ({ title, icon: Icon, children, step }: { title: string, icon: any, children: React.ReactNode, step?: string }) => (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-500">
+          <Icon size={18} />
+        </div>
+        <div className="flex flex-col">
+          {step && <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">{step}</span>}
+          <h3 className="text-xl font-serif italic text-zinc-100">{title}</h3>
+        </div>
+      </div>
+      <div className="pl-11 space-y-4">
+        {children}
+      </div>
+    </div>
+  );
 
 export default function FlawHub() {
-  const [expandedSection, setExpandedSection] = useState<string | null>('strategy');
-
-  const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
-
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="space-y-4">
-        <h2 className="text-3xl font-semibold text-zinc-100 tracking-tight">Flaw Hub</h2>
-        <p className="text-lg text-zinc-400 max-w-2xl leading-relaxed">
-          Strategy, answer-choice categories, trap patterns, famous flaws, and review method.
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <Section title="What Flaw asks" icon={Info} step="Introduction">
+        <p className="text-sm text-zinc-400 leading-relaxed font-light max-w-2xl">
+          The LSAT is not asking if you disagree with the author. It is asking for the <span className="text-zinc-100 font-medium">logical breakdown</span>. Your job is to find the gap between the evidence and the conclusion.
         </p>
-      </div>
+        <div className="bg-emerald-950/20 p-4 rounded-xl border border-emerald-500/20 inline-block">
+          <p className="text-xs text-emerald-400 font-medium">Warning: Do not pick an answer just because you think the conclusion is wrong. Pick it because it explains the bad reasoning.</p>
+        </div>
+      </Section>
 
-      <div className="flex flex-col gap-4">
-        {/* Strategy Section */}
-        <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
-          <button 
-            onClick={() => toggleSection('strategy')}
-            className="w-full flex items-center justify-between p-6 text-left hover:bg-zinc-800/50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <Zap className="text-emerald-500" size={20} />
-              <CardTitle className="text-xl">1. The Mindset</CardTitle>
+      <Section title="The 4-Step Method" icon={ListChecks} step="Core Process">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            { t: "Conclusion", d: "What is the author trying to prove?", s: "Underline it." },
+            { t: "Evidence", d: "What facts are provided?", s: "Identify the 'since' or 'because'." },
+            { t: "Assumption", d: "What is the missing link?", s: "Ask: what if this link was broken?" },
+            { t: "Flaw", d: "Name the error.", s: "State the gap in plain English." }
+          ].map((item, i) => (
+            <div key={i} className="bg-zinc-900/40 p-4 rounded-xl border border-white/[0.03]">
+              <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1 block">Step {i+1}</span>
+              <strong className="text-zinc-100 block mb-1">{item.t}</strong>
+              <p className="text-[11px] text-zinc-400 mb-2 leading-tight">{item.d}</p>
+              <p className="text-[10px] text-emerald-500 font-bold italic">{item.s}</p>
             </div>
-            {expandedSection === 'strategy' ? <ChevronDown className="text-zinc-500" /> : <ChevronRight className="text-zinc-500" />}
-          </button>
-          
-          {expandedSection === 'strategy' && (
-            <CardContent className="px-6 pb-6 pt-0 space-y-6">
-              <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800">
-                <h4 className="text-emerald-500 font-medium mb-2">What a Flaw question is really asking</h4>
-                <p className="text-zinc-300 text-sm leading-relaxed">
-                  The LSAT is not asking you to dislike the argument. It is asking you to identify the exact reasoning error that makes the evidence fail to prove the conclusion.
-                </p>
-                <p className="text-zinc-300 text-sm leading-relaxed mt-2 italic">
-                  Read actively. Your job is to object: this argument fails because something is missing, mismatched, too broad, or unsupported.
-                </p>
-              </div>
+          ))}
+        </div>
+      </Section>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="text-zinc-400 text-xs uppercase tracking-wider font-medium mb-3">Before answer choices, ask</h4>
-                  <ul className="space-y-2 text-sm text-zinc-300">
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>What is the author trying to prove?</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>What evidence is used?</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>What must the author be assuming?</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>Is the conclusion stronger than the evidence?</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-zinc-400 text-xs uppercase tracking-wider font-medium mb-3">Common places the argument breaks</h4>
-                  <ul className="space-y-2 text-sm text-zinc-300">
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>A hidden distinction</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>A scope shift</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>A cause/effect jump</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>A conditional reversal</li>
-                    <li className="flex gap-2"><span className="text-zinc-600">•</span>A sample-to-population leap</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* Answer Choice Styles Section */}
-        <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
-          <button 
-            onClick={() => toggleSection('styles')}
-            className="w-full flex items-center justify-between p-6 text-left hover:bg-zinc-800/50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <FileSearch className="text-emerald-500" size={20} />
-              <CardTitle className="text-xl">2. Three Answer-Choice Styles</CardTitle>
-            </div>
-            {expandedSection === 'styles' ? <ChevronDown className="text-zinc-500" /> : <ChevronRight className="text-zinc-500" />}
-          </button>
-          
-          {expandedSection === 'styles' && (
-            <CardContent className="px-6 pb-6 pt-0">
-              <div className="grid gap-4 md:grid-cols-3">
-                {flawHubData.styles.map((style, i) => (
-                  <div key={i} className="bg-zinc-950 border border-zinc-800 rounded-xl p-5">
-                    <h4 className="text-zinc-200 font-medium mb-3">{style.style}</h4>
-                    <div className="space-y-3 text-sm">
-                      <div>
-                        <span className="block text-zinc-500 text-[10px] uppercase tracking-wider mb-1">Recognition Language</span>
-                        <p className="text-zinc-300 italic">"{style.language}"</p>
-                      </div>
-                      <div>
-                        <span className="block text-emerald-600 text-[10px] uppercase tracking-wider mb-1">Test</span>
-                        <p className="text-zinc-400">{style.test}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* Famous Flaws Section */}
-        <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
-          <button 
-            onClick={() => toggleSection('flaws')}
-            className="w-full flex items-center justify-between p-6 text-left hover:bg-zinc-800/50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <AlertOctagon className="text-emerald-500" size={20} />
-              <CardTitle className="text-xl">3. Famous Flaw Map</CardTitle>
-            </div>
-            {expandedSection === 'flaws' ? <ChevronDown className="text-zinc-500" /> : <ChevronRight className="text-zinc-500" />}
-          </button>
-          
-          {expandedSection === 'flaws' && (
-            <CardContent className="px-6 pb-6 pt-0">
-              <div className="overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950">
-                <table className="w-full text-sm text-left">
-                  <thead className="bg-zinc-900 border-b border-zinc-800 text-zinc-400">
-                    <tr>
-                      <th className="px-6 py-3 font-medium">Flaw</th>
-                      <th className="px-6 py-3 font-medium">Plain-English test</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-zinc-800/50">
-                    {flawHubData.famousFlaws.map((flaw, i) => (
-                      <tr key={i} className="hover:bg-zinc-900/30 transition-colors">
-                        <td className="px-6 py-4 font-medium text-zinc-200">{flaw.flaw}</td>
-                        <td className="px-6 py-4 text-zinc-400">{flaw.test}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* Trap Patterns Section */}
-        <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
-          <button 
-            onClick={() => toggleSection('traps')}
-            className="w-full flex items-center justify-between p-6 text-left hover:bg-zinc-800/50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <ShieldAlert className="text-emerald-500" size={20} />
-              <CardTitle className="text-xl">4. Trap Patterns (Fast Eliminators)</CardTitle>
-            </div>
-            {expandedSection === 'traps' ? <ChevronDown className="text-zinc-500" /> : <ChevronRight className="text-zinc-500" />}
-          </button>
-          
-          {expandedSection === 'traps' && (
-            <CardContent className="px-6 pb-6 pt-0">
-              <div className="grid gap-3 sm:grid-cols-2">
-                {flawHubData.traps.map((trap, i) => (
-                  <div key={i} className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 flex gap-4">
-                    <div className="w-1/3 flex-shrink-0 border-r border-zinc-800 py-1">
-                      <span className="font-medium text-sm text-red-300">{trap.trap}</span>
-                    </div>
-                    <div className="py-1">
-                      <p className="text-sm text-zinc-400">{trap.wrong}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          )}
-        </Card>
-      </div>
-
-      <section className="pt-8 border-t border-zinc-800">
-        <h3 className="text-2xl font-medium text-zinc-100 mb-6 tracking-tight">Flaw Progressive Mastery</h3>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {Object.entries(flawHubData.progressMastery).map(([level, questions], index) => (
-            <div key={level} className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors">
-              <div className="p-4 border-b border-zinc-800/50 bg-zinc-950/50">
-                <h4 className="text-zinc-200 font-medium tracking-wide">Level {index + 1}</h4>
-              </div>
-              <div className="p-4">
-                <ul className="space-y-3 text-sm">
-                  {questions.map((q, i) => (
-                    <li key={i} className="flex justify-between items-center group">
-                      <span className="text-zinc-500 group-hover:text-zinc-400 transition-colors">Q{i + 1}</span>
-                      <span className="text-zinc-300 font-mono bg-zinc-950 px-2 flex items-center py-1 rounded border border-zinc-800/50">
-                        <span className="text-zinc-500 mr-2 text-[10px] uppercase">PT{q.pt} S{q.sec}</span>
-                        Q{q.q}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+      <Section title="Answer-choice styles" icon={Terminal} step="Recognition">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {flawHubData.styles.map((style, i) => (
+            <div key={i} className="space-y-3">
+              <h4 className="text-sm font-bold text-zinc-200">{style.style}</h4>
+              <p className="text-xs text-zinc-500 italic">"{style.language}"</p>
+              <div className="p-3 bg-zinc-950/50 rounded-lg border border-white/[0.03]">
+                <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-widest block mb-1">What to do</span>
+                <p className="text-[11px] text-zinc-400">{style.test}</p>
               </div>
             </div>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section>
-        <Card className="bg-emerald-950/10 border-emerald-900/50 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500" />
-          <CardHeader>
-            <CardTitle className="text-emerald-500">Required Review Note</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-zinc-300 leading-relaxed font-medium">
-              The author concludes <span className="text-emerald-400 border-b border-emerald-900 px-2 mx-1">______</span> because <span className="text-emerald-400 border-b border-emerald-900 px-2 mx-1">______</span>. The problem is that the author assumes <span className="text-emerald-400 border-b border-emerald-900 px-2 mx-1">______</span>. The answer is correct because it describes that exact gap.
-            </p>
-          </CardContent>
-        </Card>
-      </section>
+      <Section title="Common Traps" icon={AlertCircle} step="Avoid This">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {flawHubData.traps.map((trap, i) => (
+            <div key={i} className="flex gap-4 p-4 bg-rose-950/5 border border-rose-950/20 rounded-xl">
+              <div className="w-1/3 flex-shrink-0 border-r border-rose-950/20 pr-4">
+                <span className="text-xs font-bold text-rose-400 uppercase tracking-widest">{trap.trap}</span>
+              </div>
+              <div>
+                <p className="text-xs text-zinc-400 leading-relaxed font-light">{trap.wrong}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="bg-zinc-950 p-4 rounded-xl border border-white/5">
+          <p className="text-xs text-zinc-500"><span className="text-rose-500 font-bold">Common Mistake:</span> Picking "Wrong Flaw Label" because you recognized a word you learned, even though it doesn't fit the stimulus.</p>
+        </div>
+      </Section>
+
+      <Section title="Famous Flaw Map" icon={Map} step="Encyclopedia">
+        <div className="overflow-hidden rounded-2xl border border-white/[0.03] bg-zinc-900/10">
+          <table className="w-full text-left">
+            <thead className="bg-zinc-950/50 border-b border-white/[0.03]">
+              <tr>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Flaw</th>
+                <th className="px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Plain-English Test</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/[0.03]">
+              {flawHubData.famousFlaws.map((flaw, i) => (
+                <tr key={i} className="hover:bg-white/[0.01] transition-colors">
+                  <td className="px-6 py-4 text-xs font-bold text-zinc-200">{flaw.flaw}</td>
+                  <td className="px-6 py-4 text-xs text-zinc-400 font-light">{flaw.test}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section title="Self-Check" icon={CheckCircle2} step="Verification">
+        <div className="bg-zinc-900/40 p-6 rounded-2xl border border-white/[0.03] space-y-4">
+          <p className="text-sm text-zinc-300">Before moving to practice, can you answer these?</p>
+          <ul className="space-y-2">
+            {[
+              "Can I find the conclusion in under 10 seconds?",
+              "Do I know the difference between 'takes for granted' and 'fails to consider'?",
+              "Can I explain the argument to a 10-year-old?"
+            ].map((q, i) => (
+              <li key={i} className="flex gap-3 text-xs text-zinc-400">
+                <div className="w-4 h-4 rounded-md border border-zinc-700 mt-0.5" />
+                {q}
+              </li>
+            ))}
+          </ul>
+          <Button variant="outline" className="w-full rounded-xl border-white/[0.05] text-xs font-bold uppercase tracking-widest">
+            Go to Practice
+          </Button>
+        </div>
+      </Section>
     </div>
   );
 }

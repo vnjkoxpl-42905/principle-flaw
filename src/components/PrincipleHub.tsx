@@ -1,198 +1,110 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { principleHubData } from '../data';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { ChevronDown, ChevronRight, Scale, ShieldAlert, Navigation } from 'lucide-react';
+import { Card, CardContent } from './ui/card';
+import { Button } from './ui/button';
+import { CheckCircle2, AlertCircle, Info, Map, Terminal, ListChecks, Zap, ArrowRightLeft, Target } from 'lucide-react';
+
+const HubSection = ({ title, icon: Icon, children, step }: { title: string, icon: any, children: React.ReactNode, step?: string }) => (
+  <div className="space-y-4">
+    <div className="flex items-center gap-3">
+      <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500">
+        <Icon size={18} />
+      </div>
+      <div className="flex flex-col">
+        {step && <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">{step}</span>}
+        <h3 className="text-xl font-serif italic text-zinc-100">{title}</h3>
+      </div>
+    </div>
+    <div className="pl-11 space-y-4">
+      {children}
+    </div>
+  </div>
+);
 
 export default function PrincipleHub() {
-  const [expandedSection, setExpandedSection] = useState<string | null>('forms');
-
-  const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
-  };
-
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <div className="space-y-4">
-        <h2 className="text-3xl font-semibold text-zinc-100 tracking-tight">Principle Hub</h2>
-        <p className="text-lg text-zinc-400 max-w-2xl leading-relaxed">
-          The bridge between Flaw and Structure. Strengthen, Conform, and Parallel reasoning.
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      <HubSection title="What Principle asks" icon={Info} step="Introduction">
+        <p className="text-sm text-zinc-400 leading-relaxed font-light max-w-2xl">
+          Principle questions ask you to work with <span className="text-zinc-100 font-medium">rules</span>. Sometimes the rule is in the stimulus and you apply it to a situation. Sometimes the situation is in the stimulus and you find the rule.
         </p>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        {/* Forms Section */}
-        <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
-          <button 
-            onClick={() => toggleSection('forms')}
-            className="w-full flex items-center justify-between p-6 text-left hover:bg-zinc-800/50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <Scale className="text-emerald-500" size={20} />
-              <CardTitle className="text-xl">1. Five Principle Forms</CardTitle>
-            </div>
-            {expandedSection === 'forms' ? <ChevronDown className="text-zinc-500" /> : <ChevronRight className="text-zinc-500" />}
-          </button>
-          
-          {expandedSection === 'forms' && (
-            <CardContent className="px-6 pb-6 pt-0">
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {principleHubData.forms.map((formObj, i) => (
-                  <div key={i} className="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden flex flex-col">
-                    <div className="bg-zinc-900/80 px-4 py-3 border-b border-zinc-800/50">
-                      <h4 className="text-emerald-400 font-medium tracking-wide text-sm">{formObj.form}</h4>
-                    </div>
-                    <div className="p-4 space-y-4 flex-1">
-                      <div>
-                        <span className="block text-zinc-500 text-[10px] uppercase tracking-wider mb-1">It asks</span>
-                        <p className="text-zinc-300 text-sm leading-relaxed">{formObj.asks}</p>
-                      </div>
-                      <div>
-                        <span className="block text-zinc-500 text-[10px] uppercase tracking-wider mb-1">Your Move</span>
-                        <p className="text-zinc-400 text-sm leading-relaxed">{formObj.move}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          )}
-        </Card>
-
-        {/* Wrong Patterns Section */}
-        <Card className="bg-zinc-900 border-zinc-800 overflow-hidden">
-          <button 
-            onClick={() => toggleSection('patterns')}
-            className="w-full flex items-center justify-between p-6 text-left hover:bg-zinc-800/50 transition-colors"
-          >
-            <div className="flex items-center gap-3">
-              <ShieldAlert className="text-emerald-500" size={20} />
-              <CardTitle className="text-xl">2. Trap Patterns (Fast Eliminators)</CardTitle>
-            </div>
-            {expandedSection === 'patterns' ? <ChevronDown className="text-zinc-500" /> : <ChevronRight className="text-zinc-500" />}
-          </button>
-          
-          {expandedSection === 'patterns' && (
-            <CardContent className="px-6 pb-6 pt-0">
-              <div className="grid gap-3 sm:grid-cols-2">
-                {principleHubData.wrongPatterns.map((trap, i) => (
-                  <div key={i} className="bg-zinc-950 border border-zinc-800 rounded-lg p-4 flex gap-4">
-                    <div className="w-1/3 flex-shrink-0 border-r border-zinc-800 py-1 pr-2">
-                      <span className="font-medium text-sm text-red-300">{trap.pattern}</span>
-                    </div>
-                    <div className="py-1">
-                      <p className="text-sm text-zinc-400">{trap.catch}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          )}
-        </Card>
-      </div>
-
-      <section className="pt-8 border-t border-zinc-800">
-        <div className="flex items-center gap-3 mb-6">
-          <Navigation className="text-blue-500" size={24} />
-          <h3 className="text-2xl font-medium text-zinc-100 tracking-tight">Principle Mastery Drills</h3>
+        <div className="bg-blue-950/20 p-4 rounded-xl border border-blue-500/20 inline-block">
+          <p className="text-xs text-blue-400 font-medium">Core Concept: Principles are general rules that bridge the gap or govern the logic.</p>
         </div>
-        
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {/* Strengthen Drill */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors flex flex-col">
-            <div className="p-4 border-b border-zinc-800/50 bg-zinc-950/50">
-              <h4 className="text-zinc-200 font-medium tracking-wide">Strengthen (Drill)</h4>
-            </div>
-            <div className="p-4 flex-1">
-              <ul className="space-y-3 text-sm">
-                {principleHubData.strengthenDrill.map((q, i) => (
-                  <li key={i} className="flex justify-between items-center group">
-                    <span className="text-zinc-500 group-hover:text-zinc-400 transition-colors">Q{i + 1}</span>
-                    <span className="text-zinc-300 font-mono bg-zinc-950 px-2 flex items-center py-1 rounded border border-zinc-800/50">
-                      <span className="text-zinc-500 mr-2 text-[10px] uppercase">PT{q.pt} S{q.sec}</span>
-                      Q{q.q}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+      </HubSection>
 
-          {/* Strengthen Timed */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors flex flex-col">
-            <div className="p-4 border-b border-zinc-800/50 bg-zinc-950/50">
-              <h4 className="text-zinc-200 font-medium tracking-wide">Strengthen (Timed)</h4>
+      <HubSection title="Principle is not one type" icon={Zap} step="Classification">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {principleHubData.forms.map((form, i) => (
+            <div key={i} className="bg-zinc-900/40 p-4 rounded-xl border border-white/[0.03]">
+              <strong className="text-zinc-100 block mb-1 text-sm">{form.form}</strong>
+              <p className="text-[11px] text-zinc-500 mb-2">{form.asks}</p>
+              <div className="p-2 bg-zinc-950/50 rounded-lg">
+                <span className="text-[9px] font-bold text-blue-500 uppercase tracking-widest block mb-0.5">The Move</span>
+                <p className="text-[11px] text-zinc-400">{form.move}</p>
+              </div>
             </div>
-            <div className="p-4 flex-1">
-              <ul className="space-y-3 text-sm">
-                {principleHubData.strengthenTimed.map((q, i) => (
-                  <li key={i} className="flex justify-between items-center group">
-                    <span className="text-zinc-500 group-hover:text-zinc-400 transition-colors">Q{i + 1}</span>
-                    <span className="text-zinc-300 font-mono bg-zinc-950 px-2 flex items-center py-1 rounded border border-zinc-800/50">
-                      <span className="text-zinc-500 mr-2 text-[10px] uppercase">PT{q.pt} S{q.sec}</span>
-                      Q{q.q}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Conform Drill */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors flex flex-col">
-            <div className="p-4 border-b border-zinc-800/50 bg-zinc-950/50">
-              <h4 className="text-zinc-200 font-medium tracking-wide">Conform (Drill)</h4>
-            </div>
-            <div className="p-4 flex-1">
-              <ul className="space-y-3 text-sm">
-                {principleHubData.conformDrill.map((q, i) => (
-                  <li key={i} className="flex justify-between items-center group">
-                    <span className="text-zinc-500 group-hover:text-zinc-400 transition-colors">Q{i + 1}</span>
-                    <span className="text-zinc-300 font-mono bg-zinc-950 px-2 flex items-center py-1 rounded border border-zinc-800/50">
-                      <span className="text-zinc-500 mr-2 text-[10px] uppercase">PT{q.pt} S{q.sec}</span>
-                      Q{q.q}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Parallel Bridge */}
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-zinc-700 transition-colors flex flex-col">
-            <div className="p-4 border-b border-zinc-800/50 bg-zinc-950/50">
-              <h4 className="text-zinc-200 font-medium tracking-wide">Parallel Bridge</h4>
-            </div>
-            <div className="p-4 flex-1">
-              <ul className="space-y-3 text-sm h-[250px] overflow-y-auto custom-scrollbar pr-2">
-                {principleHubData.parallelBridge.map((q, i) => (
-                  <li key={i} className="flex justify-between items-center group">
-                    <span className="text-zinc-500 group-hover:text-zinc-400 transition-colors">Q{i + 1}</span>
-                    <span className="text-zinc-300 font-mono bg-zinc-950 px-2 flex items-center py-1 rounded border border-zinc-800/50">
-                      <span className="text-zinc-500 mr-2 text-[10px] uppercase">PT{q.pt} S{q.sec}</span>
-                      Q{q.q}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
+          ))}
         </div>
-      </section>
-      
-      <section>
-        <Card className="bg-blue-950/10 border-blue-900/50 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-1 h-full bg-blue-500" />
-          <CardHeader>
-            <CardTitle className="text-blue-500">Required Review Note</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-zinc-300 leading-relaxed font-medium">
-              The author's structure was <span className="text-blue-400 border-b border-blue-900 px-2 mx-1">______</span>. The correct answer matched this because its structure was <span className="text-blue-400 border-b border-blue-900 px-2 mx-1">______</span>. The wrong answer I picked failed because it changed <span className="text-blue-400 border-b border-blue-900 px-2 mx-1">______</span>.
-            </p>
-          </CardContent>
-        </Card>
-      </section>
+      </HubSection>
+
+      <HubSection title="Rule / Trigger / Application / Outcome" icon={ArrowRightLeft} step="The Framework">
+        <p className="text-sm text-zinc-400 font-light">Every principle has four parts. If you miss one, you miss the question.</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[
+            { t: "Rule", d: "The 'If... then' statement." },
+            { t: "Trigger", d: "The condition that starts it." },
+            { t: "Application", d: "The specific case provided." },
+            { t: "Outcome", d: "The result of the rule." }
+          ].map((item, i) => (
+            <div key={i} className="text-center p-4 rounded-xl border border-white/5 bg-zinc-950/30">
+              <span className="text-xs font-bold text-blue-400 block mb-1">{item.t}</span>
+              <p className="text-[10px] text-zinc-500 leading-tight">{item.d}</p>
+            </div>
+          ))}
+        </div>
+        <div className="bg-zinc-950 p-4 rounded-xl border border-white/5">
+           <p className="text-xs text-zinc-500"><span className="text-rose-500 font-bold">Common Mistake:</span> Outcome Overload. Picking a rule that has the right outcome but the wrong trigger.</p>
+        </div>
+      </HubSection>
+
+      <HubSection title="Major Types Breakdown" icon={Target} step="Deep Dive">
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <h4 className="text-sm font-bold text-zinc-200">Principle Strengthen / Application</h4>
+            <p className="text-xs text-zinc-500 font-light leading-relaxed">Find the rule that makes the argument valid. High-force language is usually good here. Look for "any," "all," "never."</p>
+          </div>
+          <div className="space-y-2">
+            <h4 className="text-sm font-bold text-zinc-200">Principle Conform</h4>
+            <p className="text-xs text-zinc-500 font-light leading-relaxed">Pick a rule that most closely mirrors the author's reasoning. Do not exceed the power of the argument.</p>
+          </div>
+          <div className="space-y-2">
+            <h4 className="text-sm font-bold text-zinc-200">Parallel Flaw Bridge</h4>
+            <p className="text-xs text-zinc-500 font-light leading-relaxed">The hardest type. You must identify the flaw pattern AND mirror it in a new situation.</p>
+          </div>
+        </div>
+      </HubSection>
+
+      <HubSection title="Self-Check" icon={CheckCircle2} step="Verification">
+        <div className="bg-zinc-900/40 p-6 rounded-2xl border border-white/[0.03] space-y-4">
+          <p className="text-sm text-zinc-300">Ready to drill?</p>
+          <ul className="space-y-2">
+            {[
+              "Do I know which side of the arrow the conclusion goes on?",
+              "Can I spot 'only if' reversal traps?",
+              "Can I map a principle in under 15 seconds?"
+            ].map((q, i) => (
+              <li key={i} className="flex gap-3 text-xs text-zinc-400">
+                <div className="w-4 h-4 rounded-md border border-zinc-700 mt-0.5" />
+                {q}
+              </li>
+            ))}
+          </ul>
+          <Button variant="outline" className="w-full rounded-xl border-white/[0.05] text-xs font-bold uppercase tracking-widest border-blue-500/20 text-blue-400 hover:bg-blue-500/5">
+            Go to Practice
+          </Button>
+        </div>
+      </HubSection>
     </div>
   );
 }

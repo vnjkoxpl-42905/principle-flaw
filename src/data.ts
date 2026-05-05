@@ -1,165 +1,260 @@
 export const scheduleData = [
   {
     day: 1,
-    title: "Monday",
+    label: "Monday",
     focus: "Flaw Foundation",
-    open: "Flaw Packet",
-    complete:
-      "Read Flaw Notes. Complete Flaw Worksheet. Start Flaw Progressive Mastery Level 1.",
-    review:
-      "Review conclusion, evidence, assumption, flaw, and the tempting wrong answer.",
+    plainGoal: "Learn the basic Flaw method and start Level 1.",
+    open: ["Flaw Packet"],
+    read: ["Flaw Notes: Strategy + Answer-Choice Styles"],
+    do: ["Flaw Worksheet", "Flaw Progressive Mastery Level 1"],
+    review: [
+      "Conclusion",
+      "Evidence",
+      "Assumption",
+      "Flaw",
+      "Tempting wrong answer"
+    ],
+    bring: ["2 confusing questions for tutoring"],
+    time: "75-100 minutes",
     intensity: "Medium",
-    deliverable: "Completed worksheet & Review Log entries for missed Level 1 questions"
+    deliverable: "Worksheet completed and Level 1 misses logged"
   },
   {
     day: 2,
-    title: "Tuesday",
-    focus: "Tutoring Session Prep & Light Review",
-    open: "Schedule + Flaw Packet",
-    complete:
-      "Review Monday work. Bring confusing questions from Flaw Worksheet or Flaw Progressive Mastery.",
-    review:
-      "Redo 2 questions that felt hardest. Do not add a full section unless assigned.",
+    label: "Tuesday",
+    focus: "Tutoring Prep & Light Review",
+    plainGoal: "Review Monday's work and prepare questions for tutoring.",
+    open: ["Flaw Packet"],
+    read: ["Monday's Review Log entries"],
+    do: ["Redo 2 hardest questions from Monday"],
+    review: [
+      "Process efficiency",
+      "Clarity of explanations",
+      "Specific confusion points"
+    ],
+    bring: ["List of 2-3 specific questions for tutoring"],
+    time: "30-45 minutes",
     intensity: "Light",
-    deliverable: "List of 2-3 specific questions or concepts to discuss in tutoring"
+    deliverable: "Ready for tutoring session"
   },
   {
     day: 3,
-    title: "Wednesday",
-    focus: "Principle Foundation + Flaw Reinforcement",
-    open: "Principle Packet + Flaw Packet",
-    complete:
-      "Read Principle Recap. Complete Principle Strengthen Homework Questions 1-3. Redo 2 difficult Flaw Level 1 questions.",
-    review:
-      "For Principle, identify rule, trigger, application, and missing link.",
+    label: "Wednesday",
+    focus: "Principle Foundation",
+    plainGoal: "Learn the Principle framework and start basic drills.",
+    open: ["Principle Packet", "Flaw Packet"],
+    read: ["Principle Recap: Trigger & Outcome"],
+    do: ["Principle Strengthen Homework Q1-3", "Redo 2 Flaw Level 1 questions"],
+    review: [
+      "Rule identification",
+      "Trigger mapping",
+      "Missing link",
+      "Matching outcome"
+    ],
+    bring: ["1 Principle question that felt slow"],
+    time: "60-90 minutes",
     intensity: "High",
-    deliverable: "Principle Qs 1-3 mapped (Rule + Trigger) & 2 Flaw re-dos logged"
+    deliverable: "Principle mapping completed and Flaw re-dos logged"
   },
   {
     day: 4,
-    title: "Thursday",
-    focus: "Flaw Level 2 + Answer-Choice Precision",
-    open: "Flaw Packet",
-    complete: "Review Flaw Notes. Complete Flaw Progressive Mastery Level 2.",
-    review:
-      "For the 2 hardest questions, label every answer choice: correct, too strong, wrong flaw, irrelevant, or not in the argument.",
+    label: "Thursday",
+    focus: "Flaw Level 2 & Precision",
+    plainGoal: "Master harder flaws and refine answer choice breakdown.",
+    open: ["Flaw Packet"],
+    read: ["Flaw Notes: Assumption vs Objection styles"],
+    do: ["Flaw Progressive Mastery Level 2"],
+    review: [
+      "Label every answer choice",
+      "Identify the 'too strong' trap",
+      "Spot 'bad match' errors"
+    ],
+    bring: ["A 'too strong' wrong answer you liked"],
+    time: "75-100 minutes",
     intensity: "Medium",
-    deliverable: "Level 2 completed, with full 5-answer breakdown for the 2 hardest questions"
+    deliverable: "Level 2 completed with full answer breakdowns"
   },
   {
     day: 5,
-    title: "Friday",
-    focus: "Principle Application + Flaw Maintenance",
-    open: "Principle Packet + Flaw Packet",
-    complete:
-      "Finish Principle Strengthen Homework Questions 4-5. Start Strengthen Application Homework Questions 1-3. Redo 2 Flaw misses.",
-    review:
-      "For Principle/Application, ask what condition still has to be proven.",
+    label: "Friday",
+    focus: "Principle Application",
+    plainGoal: "Apply principles to strengthen arguments and check maintenance.",
+    open: ["Principle Packet", "Flaw Packet"],
+    read: ["Principle Application strategy"],
+    do: ["Principle Strengthen Q4-5", "Strengthen Application Q1-3", "Redo 2 Flaw misses"],
+    review: [
+      "Identify the proven condition",
+      "Check for necessary vs sufficient",
+      "Verify the result"
+    ],
+    bring: ["1 Application question with a tricky 'if'"],
+    time: "60-90 minutes",
     intensity: "Medium",
-    deliverable: "Principle Qs 4-5 + Application Qs 1-3 completed"
+    deliverable: "Principle and Application homework completed"
   },
   {
     day: 6,
-    title: "Saturday",
-    focus: "Timed LR + Full Review",
-    open: "Schedule",
-    complete: "Complete one timed LR section.",
-    review:
-      "Review misses, flagged questions, all Flaw questions, all Principle questions, and any two-answer-choice decisions.",
+    label: "Saturday",
+    focus: "Timed Practice",
+    plainGoal: "Measure progress under time and perform deep review.",
+    open: ["Schedule"],
+    read: ["Timed Strategy reminder: Don't linger"],
+    do: ["One timed LR section"],
+    review: [
+      "All Flaw misses",
+      "All Principle misses",
+      "Flagged questions",
+      "Two-choice decisions"
+    ],
+    bring: ["Your worst miss from the timed section"],
+    time: "120 minutes",
     intensity: "High",
-    deliverable: "Timed section score + full review log for all misses and flagged questions"
+    deliverable: "Section score and comprehensive review log"
   },
   {
     day: 7,
-    title: "Sunday",
+    label: "Sunday",
     focus: "Controlled Review Day",
-    open: "Schedule + prior work",
-    complete: "Redo 3 missed Flaw questions and 2 missed Principle questions.",
-    review: "Make a short list of the top 3 recurring mistakes.",
+    plainGoal: "Identify recurring patterns and solidify wins.",
+    open: ["Review Log"],
+    read: ["This week's takeaways"],
+    do: ["Redo 3 Flaw misses", "Redo 2 Principle misses"],
+    review: [
+      "Recurring error types",
+      "Timing bottlenecks",
+      "Progress against goals"
+    ],
+    bring: ["Top 3 mistake list for next week"],
+    time: "45-60 minutes",
     intensity: "Light",
-    deliverable: "Top 3 recurring mistakes written down (e.g., 'Keep falling for scope shifts')"
+    deliverable: "Top 3 recurring mistakes list"
   },
   {
     day: 8,
-    title: "Monday (Week 2)",
-    focus: "Flaw Level 3 + Principle Application",
-    open: "Flaw Packet + Principle Packet",
-    complete:
-      "Complete Flaw Progressive Mastery Level 3. Continue Strengthen Application Homework Questions 4-5.",
-    review: "Keep the same process under higher difficulty.",
+    label: "Monday (Week 2)",
+    focus: "Flaw Level 3",
+    plainGoal: "Attack high-difficulty flaws and continue application.",
+    open: ["Flaw Packet", "Principle Packet"],
+    read: ["Flaw maintenance notes"],
+    do: ["Flaw Progressive Mastery Level 3", "Strengthen Application Q4-5"],
+    review: [
+      "Abstract match consistency",
+      "Tough language mapping",
+      "Speed of identification"
+    ],
+    bring: ["1 Level 3 question that felt alien"],
+    time: "90-120 minutes",
     intensity: "Medium",
-    deliverable: "Flaw Level 3 & Application Qs 4-5 completed"
+    deliverable: "Level 3 and Application work logged"
   },
   {
     day: 9,
-    title: "Tuesday (Week 2)",
-    focus: "Tutoring Session Prep: Conform + Flaw Redo",
-    open: "Principle Packet + Flaw Packet",
-    complete:
-      "Complete Principle Conform Homework Questions 1-4. Redo 3 missed Flaw questions.",
-    review:
-      "For each Principle Conform question, identify the rule, trigger, and result.",
+    label: "Tuesday (Week 2)",
+    focus: "Tutoring Prep & Conform",
+    plainGoal: "Learn Principle Conform and prepare for session.",
+    open: ["Principle Packet", "Flaw Packet"],
+    read: ["Principle Conform strategy"],
+    do: ["Principle Conform Q1-4", "Redo 3 Flaw misses"],
+    review: [
+      "Fact-to-rule matching",
+      "Identity mapping",
+      "Outcome verification"
+    ],
+    bring: ["List of Conform questions to review"],
+    time: "75-100 minutes",
     intensity: "Medium",
-    deliverable: "Conform Qs 1-4 mapped & questions prepared for tutoring"
+    deliverable: "Ready for tutoring session"
   },
   {
     day: 10,
-    title: "Wednesday (Week 2)",
-    focus: "Mixed Flaw + Principle Drill",
-    open: "Flaw Packet + Principle Packet",
-    complete:
-      "Complete first portion of Flaw Progressive Mastery Level 4. Continue Principle Conform Homework Questions 5-6.",
-    review:
-      "Label the task before reviewing: Flaw = what went wrong. Principle = what rule applies.",
+    label: "Wednesday (Week 2)",
+    focus: "Mixed Drills",
+    plainGoal: "Handle shifting targets between Flaw and Principle.",
+    open: ["Flaw Packet", "Principle Packet"],
+    read: ["Task-switching mindset"],
+    do: ["Flaw Progressive Mastery Level 4 (Part 1)", "Principle Conform Q5-6"],
+    review: [
+      "Task identification speed",
+      "Process separation",
+      "Accuracy vs speed"
+    ],
+    bring: ["1 question where you matched the wrong task"],
+    time: "90-120 minutes",
     intensity: "High",
-    deliverable: "Flaw Level 4 (part 1) & Conform Qs 5-6 completed"
+    deliverable: "Mixed drill completed"
   },
   {
     day: 11,
-    title: "Thursday (Week 2)",
-    focus: "Principle Conform Finish + Parallel Flaw Bridge",
-    open: "Principle Packet",
-    complete:
-      "Finish Principle Conform Homework Questions 7-8. Start Parallel Flaw Bridge with the first 3 questions only.",
-    review:
-      "For Parallel Flaw, write the argument pattern before answer choices.",
+    label: "Thursday (Week 2)",
+    focus: "Conform & Parallel Bridge",
+    plainGoal: "Finish Conform and bridge to Parallel Flaw.",
+    open: ["Principle Packet"],
+    read: ["Parallel Flaw: Pattern Matching"],
+    do: ["Principle Conform Q7-8", "Parallel Flaw Bridge Q1-3"],
+    review: [
+      "Argument pattern mapping",
+      "Answer choice mirroring",
+      "Logical force matching"
+    ],
+    bring: ["A Parallel Flaw answer you thought mirrored perfectly"],
+    time: "90-120 minutes",
     intensity: "High",
-    deliverable: "Conform Qs 7-8 & Parallel Flaw Qs 1-3 mapped"
+    deliverable: "Parallel Bridge started"
   },
   {
     day: 12,
-    title: "Friday (Week 2)",
-    focus: "Timed LR + Targeted Breakdown",
-    open: "Schedule",
-    complete: "Complete one timed LR section.",
-    review:
-      "Review in order: missed Flaw, missed Principle, missed Parallel Flaw, other misses, flagged questions.",
+    label: "Friday (Week 2)",
+    focus: "Final Timed LR",
+    plainGoal: "Final section test before wrap-up.",
+    open: ["Schedule"],
+    read: ["Confidence reminder"],
+    do: ["One timed LR section"],
+    review: [
+      "Priority review: Flaws first",
+      "Secondary: Principles",
+      "Tertiary: Flags"
+    ],
+    bring: ["A question you flagged but got right"],
+    time: "120 minutes",
     intensity: "High",
-    deliverable: "Timed section score + prioritized review log"
+    deliverable: "Timed section score and prioritized review"
   },
   {
     day: 13,
-    title: "Saturday (Week 2)",
-    focus: "Final Flaw Review + RC",
-    open: "Flaw Packet + Schedule",
-    complete:
-      "Finish assigned Flaw Level 4 work. Redo 5 Flaw questions from the two-week block. Complete one untimed RC passage.",
-    review:
-      "For RC, find the exact sentence or lines that prove the correct answer.",
+    label: "Saturday (Week 2)",
+    focus: "Final Mastery & RC",
+    plainGoal: "Close out Level 4 and incorporate reading.",
+    open: ["Flaw Packet", "Schedule"],
+    read: ["RC: Structure vs Details"],
+    do: ["Finish Flaw Level 4", "Redo 5 Flaw hard ones", "One untimed RC passage"],
+    review: [
+      "Full argument mapping for RC",
+      "Proof lines for every answer",
+      "Flaw Level 4 final patterns"
+    ],
+    bring: ["1 RC question where the proof felt hidden"],
+    time: "120 minutes",
     intensity: "Medium",
-    deliverable: "Flaw Level 4 finished, 5 re-dos, RC passage analyzed"
+    deliverable: "Flaw mastery finished and RC passage logged"
   },
   {
     day: 14,
-    title: "Sunday (Week 2)",
-    focus: "Final Review + Reset",
-    open: "Schedule + both packets",
-    complete:
-      "Redo 3 Flaw questions, 3 Principle questions, and 1 Parallel Flaw question.",
-    review: "Write 5 takeaways using: Next time, I need to notice ____.",
+    label: "Sunday (Week 2)",
+    focus: "Strategic Wrap-up",
+    plainGoal: "Extract permanent takeaways for future blocks.",
+    open: ["Schedule"],
+    read: ["Takeaway formatting"],
+    do: ["Redo 3 Flaw, 3 Principle, 1 Parallel Flaw"],
+    review: [
+      "Final takeaways",
+      "Next block goals",
+      "Confidence check"
+    ],
+    bring: ["5 key takeaways for your coach"],
+    time: "60 minutes",
     intensity: "Light",
-    deliverable: "5 clear takeaways to carry into the next study block"
-  },
+    deliverable: "5 clear takeaways logged"
+  }
 ];
 
 export const flawHubData = {
