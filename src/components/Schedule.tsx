@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import { scheduleData } from '../data';
 import { Card, CardContent } from './ui/card';
-import { ChevronDown, Calendar, Clock, Target, FileSearch, BookOpen, AlertCircle } from 'lucide-react';
+import { ChevronDown, Calendar, Clock, Target, FileSearch, BookOpen, AlertCircle, Check, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 
 export default function Schedule() {
   const [expanded, setExpanded] = useState<number[]>([1]);
+  const [completedTasks, setCompletedTasks] = useState<Record<string, boolean>>({});
+
+  const toggleTask = (day: number, taskIndex: number, section: string) => {
+    const key = `${day}-${section}-${taskIndex}`;
+    setCompletedTasks(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const isTaskDone = (day: number, taskIndex: number, section: string) => {
+    return !!completedTasks[`${day}-${section}-${taskIndex}`];
+  };
 
   const toggle = (day: number) => {
     if (expanded.includes(day)) {
@@ -23,7 +33,7 @@ export default function Schedule() {
           <Calendar size={14} className="animate-pulse" />
           <span className="font-bold text-[10px] uppercase tracking-[0.2em]">The Roadmap</span>
         </div>
-        <h2 className="text-4xl font-serif italic text-white tracking-tight">Full 14-Day Schedule</h2>
+        <h2 className="text-4xl font-serif italic text-white tracking-tight">Your Path</h2>
       </div>
 
       <div className="space-y-4 max-w-4xl mx-auto">
@@ -122,105 +132,169 @@ export default function Schedule() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-white/[0.03]">
-                          {/* Open Packets */}
-                          <div className="bg-zinc-950/30 p-5 rounded-2xl border border-white/[0.03] space-y-4 hover:border-white/10 transition-colors">
+                          {/* STEP 1: OPEN */}
+                          <div className={`p-5 rounded-2xl border transition-all duration-300 ${
+                            data.open.every((_, i) => isTaskDone(data.day, i, 'open')) 
+                            ? 'bg-zinc-900/10 border-zinc-800 opacity-50' 
+                            : 'bg-zinc-950/30 border-white/[0.03] hover:border-white/10'
+                          }`}>
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <div className="flex items-center gap-2 text-zinc-500 cursor-help w-fit">
+                                <div className="flex items-center gap-2 text-zinc-500 cursor-help w-fit mb-4">
                                   <FileSearch size={14} />
-                                  <span className="text-[9px] font-bold uppercase tracking-widest">Open Packets</span>
+                                  <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Step 1: Open</span>
                                 </div>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Packets and secondary documents needed for today's lesson.</p>
+                                <p>Get these documents ready before you start.</p>
                               </TooltipContent>
                             </Tooltip>
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                {data.open.map((item, i) => (
-                                 <li key={i} className="flex gap-2 text-sm text-zinc-300 font-light items-start leading-snug">
-                                   <div className="w-1 h-1 rounded-full bg-zinc-700 mt-1.5 flex-shrink-0" />
-                                   {item}
+                                 <li key={i} 
+                                   onClick={() => toggleTask(data.day, i, 'open')}
+                                   className="group/task flex gap-3 text-sm cursor-pointer items-start leading-snug"
+                                 >
+                                   <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                                     isTaskDone(data.day, i, 'open') ? 'bg-emerald-500 border-emerald-500' : 'border-zinc-700 group-hover/task:border-zinc-500'
+                                   }`}>
+                                     {isTaskDone(data.day, i, 'open') && <Check size={10} className="text-white" />}
+                                   </div>
+                                   <span className={`transition-colors ${isTaskDone(data.day, i, 'open') ? 'text-zinc-500 line-through' : 'text-zinc-300'}`}>
+                                     {item}
+                                   </span>
                                  </li>
                                ))}
                             </ul>
                           </div>
 
-                          {/* Required Reading */}
-                          <div className="bg-emerald-500/[0.02] p-5 rounded-2xl border border-emerald-500/10 space-y-4 hover:border-emerald-500/30 transition-colors">
+                          {/* STEP 2: READ */}
+                          <div className={`p-5 rounded-2xl border transition-all duration-300 ${
+                            data.read.every((_, i) => isTaskDone(data.day, i, 'read')) 
+                            ? 'bg-zinc-900/10 border-zinc-800 opacity-50' 
+                            : 'bg-emerald-500/[0.02] border-emerald-500/10 hover:border-emerald-500/30'
+                          }`}>
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <div className="flex items-center gap-2 text-emerald-500 cursor-help w-fit">
+                                <div className="flex items-center gap-2 text-emerald-500 cursor-help w-fit mb-4">
                                   <BookOpen size={14} />
-                                  <span className="text-[9px] font-bold uppercase tracking-widest">Required Reading</span>
+                                  <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Step 2: Read</span>
                                 </div>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Essential reading: notes, strategy guides, and reviews.</p>
+                                <p>Core conceptual knowledge for today.</p>
                               </TooltipContent>
                             </Tooltip>
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                {data.read.map((item, i) => (
-                                 <li key={i} className="flex gap-2 text-sm text-zinc-300 font-light items-start leading-snug">
-                                   <div className="w-1 h-1 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
-                                   {item}
+                                 <li key={i} 
+                                   onClick={() => toggleTask(data.day, i, 'read')}
+                                   className="group/task flex gap-3 text-sm cursor-pointer items-start leading-snug"
+                                 >
+                                   <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                                     isTaskDone(data.day, i, 'read') ? 'bg-emerald-500 border-emerald-500' : 'border-emerald-500/20 group-hover/task:border-emerald-500/40'
+                                   }`}>
+                                     {isTaskDone(data.day, i, 'read') && <Check size={10} className="text-white" />}
+                                   </div>
+                                   <span className={`transition-colors ${isTaskDone(data.day, i, 'read') ? 'text-zinc-500 line-through' : 'text-zinc-300'}`}>
+                                     {item}
+                                   </span>
                                  </li>
                                ))}
                             </ul>
                           </div>
                           
-                          {/* Homework Drills */}
-                          <div className="bg-purple-500/[0.02] p-5 rounded-2xl border border-purple-500/10 space-y-4 hover:border-purple-500/30 transition-colors">
+                          {/* STEP 3: DO */}
+                          <div className={`p-5 rounded-2xl border transition-all duration-300 ${
+                            data.do.every((_, i) => isTaskDone(data.day, i, 'do')) 
+                            ? 'bg-zinc-900/10 border-zinc-800 opacity-50' 
+                            : 'bg-purple-500/[0.02] border-purple-500/10 hover:border-purple-500/30'
+                          }`}>
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <div className="flex items-center gap-2 text-purple-500 cursor-help w-fit">
+                                <div className="flex items-center gap-2 text-purple-500 cursor-help w-fit mb-4">
                                   <Target size={14} />
-                                  <span className="text-[9px] font-bold uppercase tracking-widest">Homework Drills</span>
+                                  <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Step 3: Do</span>
                                 </div>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>Primary practice: worksheets, drills, and timed sections.</p>
+                                <p>Active practice: worksheets and drills.</p>
                               </TooltipContent>
                             </Tooltip>
-                            <ul className="space-y-2">
+                            <ul className="space-y-3">
                                {data.do.map((item, i) => (
-                                 <li key={i} className="flex gap-2 text-sm text-zinc-300 font-light items-start leading-snug">
-                                   <div className="w-1 h-1 rounded-full bg-purple-500 mt-1.5 flex-shrink-0" />
-                                   {item}
+                                 <li key={i} 
+                                   onClick={() => toggleTask(data.day, i, 'do')}
+                                   className="group/task flex gap-3 text-sm cursor-pointer items-start leading-snug"
+                                 >
+                                   <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                                     isTaskDone(data.day, i, 'do') ? 'bg-purple-500 border-purple-500' : 'border-purple-500/20 group-hover/task:border-purple-500/40'
+                                   }`}>
+                                     {isTaskDone(data.day, i, 'do') && <Check size={10} className="text-white" />}
+                                   </div>
+                                   <span className={`transition-colors ${isTaskDone(data.day, i, 'do') ? 'text-zinc-500 line-through' : 'text-zinc-300'}`}>
+                                     {item}
+                                   </span>
                                  </li>
                                ))}
                             </ul>
                           </div>
 
-                          {/* Review & Deliverable */}
-                          <div className="flex flex-col gap-6">
-                            <div className="bg-amber-500/[0.02] p-5 rounded-2xl border border-amber-500/10 space-y-4 hover:border-amber-500/30 transition-colors flex-1">
+                          {/* STEP 4: WRITE & DONE */}
+                          <div className="flex flex-col gap-4">
+                            <div className={`p-5 rounded-2xl border transition-all duration-300 flex-1 ${
+                              data.review.every((_, i) => isTaskDone(data.day, i, 'review')) 
+                              ? 'bg-zinc-900/10 border-zinc-800 opacity-50' 
+                              : 'bg-amber-500/[0.02] border-amber-500/10 hover:border-amber-500/30'
+                            }`}>
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <div className="flex items-center gap-2 text-amber-500 cursor-help w-fit">
+                                  <div className="flex items-center gap-2 text-amber-500 cursor-help w-fit mb-4">
                                     <Clock size={14} />
-                                    <span className="text-[9px] font-bold uppercase tracking-widest">Review Points</span>
+                                    <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Step 4: Think</span>
                                   </div>
                                 </TooltipTrigger>
                                 <TooltipContent>
-                                  <p>Mistake analysis: exactly what to explain for missed questions.</p>
+                                  <p>What to look for while you grade your work.</p>
                                 </TooltipContent>
                               </Tooltip>
-                              <ul className="space-y-2">
+                              <ul className="space-y-3">
                                  {data.review.map((item, i) => (
-                                   <li key={i} className="flex gap-2 text-sm text-zinc-300 font-light items-start leading-snug">
-                                     <div className="w-1 h-1 rounded-full bg-amber-500 mt-1.5 flex-shrink-0" />
-                                     {item}
+                                   <li key={i} 
+                                     onClick={() => toggleTask(data.day, i, 'review')}
+                                     className="group/task flex gap-3 text-sm cursor-pointer items-start leading-snug"
+                                   >
+                                     <div className={`mt-0.5 w-4 h-4 rounded border flex items-center justify-center transition-colors ${
+                                       isTaskDone(data.day, i, 'review') ? 'bg-amber-500 border-amber-500' : 'border-amber-500/20 group-hover/task:border-amber-500/40'
+                                     }`}>
+                                       {isTaskDone(data.day, i, 'review') && <Check size={10} className="text-white" />}
+                                     </div>
+                                     <span className={`transition-colors ${isTaskDone(data.day, i, 'review') ? 'text-zinc-500 line-through' : 'text-zinc-300'}`}>
+                                       {item}
+                                     </span>
                                    </li>
                                  ))}
                               </ul>
                             </div>
 
-                            <div className="bg-rose-500/[0.02] p-4 rounded-2xl border border-rose-500/10 group/deliverable transition-colors hover:bg-rose-500/[0.04]">
-                              <div className="flex items-center gap-2 text-rose-500 mb-2">
-                                <AlertCircle size={14} />
-                                <span className="text-[9px] font-bold uppercase tracking-widest">Deliverable</span>
+                            <div className="bg-emerald-500 p-4 rounded-2xl group/done transition-all hover:bg-emerald-400 active:scale-95 cursor-pointer shadow-xl shadow-emerald-500/20">
+                               <div className="flex items-center justify-between">
+                                 <div className="flex flex-col">
+                                   <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-emerald-950/60">Final Step</span>
+                                   <span className="text-emerald-950 font-bold text-sm">Log Your Progress</span>
+                                 </div>
+                                 <div className="w-8 h-8 rounded-full bg-emerald-950/10 flex items-center justify-center">
+                                   <ArrowRight size={16} className="text-emerald-950" />
+                                 </div>
+                               </div>
+                            </div>
+
+                            <div className="bg-zinc-950/50 p-4 rounded-2xl border border-white/[0.03] group/deliverable">
+                              <div className="flex items-center gap-2 text-rose-500 mb-1.5">
+                                <AlertCircle size={12} />
+                                <span className="text-[8px] font-bold uppercase tracking-widest text-zinc-500">Deliverable</span>
                               </div>
-                              <p className="text-zinc-500 text-xs font-light leading-relaxed group-hover/deliverable:text-zinc-400 transition-colors">{data.deliverable}</p>
+                              <p className="text-zinc-400 text-[11px] leading-snug">{data.deliverable}</p>
                             </div>
                           </div>
                         </div>
