@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, Circle, Clock, Target, FileSearch, Sparkles, MoveRight, BookOpen, AlertCircle, MessageSquare } from 'lucide-react';
-import { scheduleData } from '../data';
+import { CheckCircle2, Circle, Clock, Target, FileSearch, Sparkles, MoveRight, BookOpen, AlertCircle, MessageSquare, ArrowRight, ExternalLink } from 'lucide-react';
+import { scheduleData, studyResources, StudyResource } from '../data';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function TodayView({ userName, day, setDay }: { userName: string, day: number, setDay: (d: number) => void }) {
+export default function TodayView({ 
+  userName, 
+  day, 
+  setDay, 
+  onOpenResource 
+}: { 
+  userName: string, 
+  day: number, 
+  setDay: (d: number) => void,
+  onOpenResource: (r: Partial<StudyResource>) => void
+}) {
   const data = scheduleData.find(d => d.day === day) || scheduleData[0];
   
   const [completedDays, setCompletedDays] = useState<number[]>(() => {
@@ -36,11 +47,12 @@ export default function TodayView({ userName, day, setDay }: { userName: string,
   const toggleChecklistItem = (item: string) => {
     setDailyChecklists(prev => {
       const dayTasks = prev[day] || {};
+      const newState = !dayTasks[item];
       return {
         ...prev,
         [day]: {
           ...dayTasks,
-          [item]: !dayTasks[item]
+          [item]: newState
         }
       };
     });
@@ -49,137 +61,281 @@ export default function TodayView({ userName, day, setDay }: { userName: string,
   const dayTasks = dailyChecklists[day] || {};
   const isComplete = completedDays.includes(day);
 
-  const StepCard = ({ icon: Icon, title, items, color }: { icon: any, title: string, items: string[], color: string }) => (
-    <Card className="bg-zinc-900/20 backdrop-blur-sm border-zinc-800/50 group overflow-hidden h-full">
-      <div className="p-4 flex items-start gap-4 h-full">
-        <div className={`w-10 h-10 rounded-xl bg-zinc-950 border border-white/[0.05] flex items-center justify-center flex-shrink-0 ${color}`}>
-          <Icon size={20} />
-        </div>
-        <div className="space-y-2 uppercase tracking-tighter">
-          <h4 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">{title}</h4>
-          <ul className="space-y-1">
-            {items.map((item, i) => (
-              <li key={i} className="text-sm text-zinc-100 font-light leading-snug">{item}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </Card>
-  );
+  const resolveResource = (idOrName: string) => {
+    return studyResources.find(r => r.id === idOrName) || {
+      id: idOrName,
+      title: idOrName,
+      description: "",
+      includedInApp: false
+    } as Partial<StudyResource>;
+  };
 
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-zinc-900/50">
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-emerald-500 mb-1">
-            <Sparkles size={14} className="animate-pulse" />
-            <span className="font-semibold text-[10px] uppercase tracking-[0.2em]">Welcome back, {userName}</span>
+  const GuidedStep = ({ 
+    num, 
+    title, 
+    label, 
+    items, 
+    icon: Icon, 
+    color, 
+    taskKey 
+  }: { 
+    num: string, 
+    title: string, 
+    label: string, 
+    items: string[], 
+    icon: any, 
+    color: string,
+    taskKey: string
+  }) => {
+    const isDone = !!dayTasks[taskKey];
+    
+    return (
+      <motion.div 
+        layout
+        className={`relative flex gap-6 p-6 rounded-3xl border transition-all duration-500 ${
+          isDone 
+            ? 'bg-zinc-900/10 border-zinc-900 opacity-60' 
+            : 'bg-zinc-900/30 border-white/[0.03] shadow-xl shadow-black/20'
+        }`}
+      >
+        <div className="flex flex-col items-center gap-4">
+          <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border font-serif italic text-xl transition-all duration-500 ${
+            isDone ? 'bg-zinc-950 border-zinc-800 text-zinc-600' : `${color} border-current bg-current/10`
+          }`}>
+            {num}
           </div>
-          <h2 className="text-4xl font-serif italic text-white tracking-tight">Today</h2>
+          {!isDone && <div className="w-0.5 flex-1 bg-gradient-to-b from-zinc-800 to-transparent rounded-full" />}
         </div>
-        
-        <div className="flex items-center gap-3 bg-zinc-900/30 p-2 rounded-2xl border border-white/[0.03]">
-          <select 
-            value={day} 
-            onChange={(e) => setDay(Number(e.target.value))}
-            className="bg-transparent text-xs font-bold uppercase tracking-widest px-4 py-2 text-zinc-400 focus:outline-none appearance-none cursor-pointer hover:text-white transition-colors"
-          >
-            {scheduleData.map(d => (
-              <option key={d.day} value={d.day} className="bg-zinc-950 text-zinc-300">Day {d.day}: {d.label}</option>
-            ))}
-          </select>
-          <div className="w-px h-4 bg-zinc-800" />
-          <Button 
-            variant="ghost" 
-            size="icon"
-            className="h-8 w-8 rounded-xl hover:bg-white/5 hover:text-white text-zinc-500"
-            disabled={day === 14} 
-            onClick={() => setDay(day + 1)}
-            title="Next Day"
-          >
-            <MoveRight size={14} />
-          </Button>
-        </div>
-      </div>
 
-      <div className="space-y-10">
-        <section className="space-y-4">
-          <div className="flex justify-between items-center px-2">
-            <div className="space-y-1">
-              <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Today's Goal</span>
-              <h3 className="text-2xl font-serif italic text-zinc-100">{data.plainGoal}</h3>
+        <div className="flex-1 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="space-y-0.5">
+              <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${isDone ? 'text-zinc-600' : 'text-zinc-400'}`}>{label}</span>
+              <h4 className={`text-xl font-serif italic ${isDone ? 'text-zinc-500 line-through' : 'text-zinc-100'}`}>{title}</h4>
             </div>
             <button 
-              onClick={toggleDayComplete}
-              className={`p-4 rounded-2xl border transition-all ${isComplete ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-500' : 'bg-zinc-950/50 border-white/[0.05] text-zinc-700 hover:border-emerald-500/50'}`}
+              onClick={() => toggleChecklistItem(taskKey)}
+              className={`p-2 rounded-xl border transition-all ${
+                isDone 
+                  ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-500' 
+                  : 'bg-zinc-950/50 border-white/[0.05] text-zinc-700 hover:border-emerald-500/50 hover:text-emerald-500'
+              }`}
             >
-              {isComplete ? <CheckCircle2 size={24} /> : <Circle size={24} />}
+              <CheckCircle2 size={24} />
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <StepCard icon={FileSearch} title="Open This" items={data.open} color="text-blue-500" />
-            <StepCard icon={BookOpen} title="Read This" items={data.read} color="text-emerald-500" />
-            <StepCard icon={Target} title="Do This" items={data.do} color="text-purple-500" />
-            <StepCard icon={Clock} title="Review This" items={data.review} color="text-amber-500" />
-            <StepCard icon={AlertCircle} title="Bring / Write This" items={data.bring} color="text-rose-500" />
-            
-            <Card className="bg-zinc-900/20 backdrop-blur-sm border-zinc-800/50 h-full">
-              <div className="p-4 border-b border-white/[0.03]">
-                <span className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Status Checklist</span>
-              </div>
-              <div className="p-4 space-y-2">
-                <ChecklistItem label="Notes read" checked={!!dayTasks['notes']} onChange={() => toggleChecklistItem('notes')} />
-                <ChecklistItem label="Homework done" checked={!!dayTasks['hw']} onChange={() => toggleChecklistItem('hw')} />
-                <ChecklistItem label="Missed questions reviewed" checked={!!dayTasks['missed']} onChange={() => toggleChecklistItem('missed')} />
-                <ChecklistItem label="Review log updated" checked={!!dayTasks['log']} onChange={() => toggleChecklistItem('log')} />
-                <ChecklistItem label="Takeaway written" checked={!!dayTasks['takeaway']} onChange={() => toggleChecklistItem('takeaway')} />
-              </div>
-            </Card>
+          {!isDone && (
+            <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-500">
+              {items.map((item, i) => {
+                const res = resolveResource(item);
+                return (
+                  <div key={i} className="group/item flex items-center justify-between p-4 rounded-2xl bg-zinc-950/50 border border-white/[0.02] hover:border-white/10 transition-all">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center flex-shrink-0">
+                        <Icon size={16} className={isDone ? 'text-zinc-600' : 'text-zinc-400'} />
+                      </div>
+                      <div>
+                        <span className="text-sm text-zinc-200 font-light block">{res.title}</span>
+                        {res.description && <span className="text-[10px] text-zinc-600 font-medium block mt-0.5">{res.description}</span>}
+                      </div>
+                    </div>
+                    {res.includedInApp && (
+                      <Button 
+                        onClick={() => onOpenResource(res)}
+                        variant="ghost" 
+                        size="sm" 
+                        className="h-8 px-3 rounded-lg bg-white/5 hover:bg-white text-zinc-400 hover:text-zinc-950 text-[10px] uppercase font-bold tracking-widest gap-2"
+                      >
+                        Open <ExternalLink size={10} />
+                      </Button>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </motion.div>
+    );
+  };
+
+  return (
+    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20 max-w-2xl mx-auto">
+      {/* Header Area */}
+      <div className="flex flex-col gap-6 text-center">
+        <div className="space-y-2">
+          <div className="flex items-center justify-center gap-2 text-emerald-500 mb-1">
+            <Sparkles size={14} className="animate-pulse" />
+            <span className="font-bold text-[10px] uppercase tracking-[0.3em]">Day {day} • {data.label}</span>
           </div>
-        </section>
+          <h2 className="text-5xl md:text-6xl font-serif italic text-white tracking-tight leading-tight">
+            {data.focus}
+          </h2>
+          <p className="text-zinc-500 font-light text-lg">
+            {data.plainGoal}
+          </p>
+        </div>
+        
+        <div className="flex items-center justify-center gap-4">
+           <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-zinc-900/50 border border-white/[0.05]">
+             <Clock size={14} className="text-zinc-600" />
+             <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">{data.time}</span>
+           </div>
+           <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-zinc-900/50 border border-white/[0.05]">
+             <Target size={14} className="text-zinc-600" />
+             <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">{data.intensity} Intensity</span>
+           </div>
+        </div>
+      </div>
 
-        <section className="pt-8 border-t border-zinc-900/50">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Card className="bg-zinc-900/40 border-zinc-800/50 p-6 rounded-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 blur-3xl rounded-full translate-x-16 -translate-y-16" />
-              <div className="flex items-center gap-3 text-emerald-500 mb-4">
-                <Target size={18} />
-                <h3 className="text-xs font-bold uppercase tracking-[0.2em]">What's Next?</h3>
-              </div>
-              <div className="space-y-4">
-                <p className="text-sm text-zinc-300 font-light leading-relaxed">
-                  {isComplete 
-                    ? "Great job finishing today's tasks. Review your takeaway in the log and prepare any questions for your next session." 
-                    : "Focus on your 'Read' and 'Do' tasks first. Don't worry about speed today—worry about precision."}
-                </p>
-                <div className="flex gap-4">
-                   <Button variant="outline" className="flex-1 rounded-xl border-white/[0.03] bg-zinc-950/50 h-10 text-[10px] font-bold uppercase tracking-widest text-zinc-400 group-hover:border-emerald-500/20">
-                      Tomorrow's Preview
-                   </Button>
-                   <Button className="flex-1 rounded-xl bg-zinc-100 text-zinc-950 h-10 text-[10px] font-bold uppercase tracking-widest">
-                      Go to Review Log
-                   </Button>
-                </div>
-              </div>
-            </Card>
+      {/* The Path */}
+      <div className="space-y-8 relative">
+        <div className="absolute left-[30px] top-10 bottom-10 w-px bg-zinc-900" />
+        
+        <GuidedStep 
+          num="1" 
+          label="Setup" 
+          title="Open This" 
+          items={data.open} 
+          icon={FileSearch} 
+          color="text-blue-500"
+          taskKey="open"
+        />
 
-            <div className="grid grid-cols-2 gap-4">
-              <Button variant="outline" className="h-full rounded-2xl border-white/[0.03] bg-zinc-950/50 hover:bg-zinc-900 flex flex-col items-center justify-center gap-2 p-4">
-                 <FileSearch className="text-blue-500" size={20} />
-                 <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">Learn Flaw</span>
-              </Button>
-              <Button variant="outline" className="h-full rounded-2xl border-white/[0.03] bg-zinc-950/50 hover:bg-zinc-900 flex flex-col items-center justify-center gap-2 p-4">
-                 <BookOpen className="text-emerald-500" size={20} />
-                 <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">Learn Principle</span>
-              </Button>
+        <GuidedStep 
+          num="2" 
+          label="Knowledge" 
+          title="Read This" 
+          items={data.read} 
+          icon={BookOpen} 
+          color="text-emerald-500"
+          taskKey="read"
+        />
+
+        <GuidedStep 
+          num="3" 
+          label="Execution" 
+          title="Do This" 
+          items={data.do} 
+          icon={Target} 
+          color="text-purple-500"
+          taskKey="do"
+        />
+
+        <GuidedStep 
+          num="4" 
+          label="Mastery" 
+          title="Think About This" 
+          items={data.review} 
+          icon={AlertCircle} 
+          color="text-amber-500"
+          taskKey="review"
+        />
+
+        <motion.div 
+          layout
+          className={`relative flex gap-6 p-6 rounded-3xl border transition-all duration-500 ${
+            !!dayTasks['log'] 
+              ? 'bg-zinc-900/10 border-zinc-900 opacity-60' 
+              : 'bg-zinc-900/30 border-white/[0.03] shadow-xl shadow-black/20'
+          }`}
+        >
+          <div className="flex flex-col items-center gap-4">
+            <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border font-serif italic text-xl transition-all duration-500 ${
+              !!dayTasks['log'] ? 'bg-zinc-950 border-zinc-800 text-zinc-600' : 'text-rose-500 border-current bg-current/10'
+            }`}>
+              5
             </div>
           </div>
-        </section>
+          <div className="flex-1 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${!!dayTasks['log'] ? 'text-zinc-600' : 'text-zinc-400'}`}>Conclusion</span>
+                <h4 className={`text-xl font-serif italic ${!!dayTasks['log'] ? 'text-zinc-500 line-through' : 'text-zinc-100'}`}>Write & Prep</h4>
+              </div>
+              <button 
+                onClick={() => toggleChecklistItem('log')}
+                className={`p-2 rounded-xl border transition-all ${
+                  !!dayTasks['log'] 
+                    ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-500' 
+                    : 'bg-zinc-950/50 border-white/[0.05] text-zinc-700 hover:border-emerald-500/50 hover:text-emerald-500'
+                }`}
+              >
+                <CheckCircle2 size={24} />
+              </button>
+            </div>
+            {!dayTasks['log'] && (
+              <div className="space-y-4">
+                <div className="p-5 rounded-2xl bg-zinc-950/50 border border-white/[0.02] space-y-3">
+                  <div className="space-y-2">
+                    <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Deliverable</span>
+                    <p className="text-sm text-zinc-400 font-light italic leading-relaxed">
+                      "{data.deliverable}"
+                    </p>
+                  </div>
+                  {data.bring && data.bring.length > 0 && (
+                    <div className="space-y-2 pt-3 border-t border-white/[0.02]">
+                      <span className="text-[10px] uppercase tracking-widest text-zinc-600 font-bold">Prep for Tutoring</span>
+                      <ul className="space-y-1">
+                        {data.bring.map((item, i) => (
+                           <li key={i} className="text-sm text-zinc-300 font-light flex gap-2">
+                             <div className="w-1 h-4 bg-rose-500/50 rounded-full" />
+                             {item}
+                           </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <Button className="w-full h-12 rounded-xl bg-zinc-100 text-zinc-950 text-xs font-bold uppercase tracking-widest gap-2 mt-4">
+                    Update Review Log <ArrowRight size={14} />
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
+        </motion.div>
       </div>
+
+      {/* Final Action */}
+      <AnimatePresence>
+        {(isComplete || Object.values(dayTasks).every(Boolean)) && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="pt-12 text-center space-y-6"
+          >
+            <div className="inline-flex flex-col items-center gap-2">
+              <div className="w-20 h-20 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-500 mb-2">
+                <CheckCircle2 size={40} />
+              </div>
+              <h3 className="text-2xl font-serif italic text-white uppercase tracking-tight">Day {day} Complete</h3>
+              <p className="text-zinc-500 text-sm max-w-xs mx-auto">Excellent consistency. You are one day closer to mastery.</p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <Button 
+                variant="outline" 
+                className="h-16 px-10 rounded-2xl border-white/[0.05] bg-zinc-950/50 text-xs font-bold uppercase tracking-widest text-zinc-400 flex-1 sm:max-w-xs"
+                onClick={() => setDay(day > 1 ? day - 1 : 1)}
+              >
+                Previous Day
+              </Button>
+              <Button 
+                className="h-16 px-10 rounded-2xl bg-zinc-100 text-zinc-950 text-xs font-bold uppercase tracking-widest flex-1 sm:max-w-xs group shadow-2xl shadow-white/5"
+                onClick={() => setDay(day < 14 ? day + 1 : 14)}
+              >
+                Next Day: {scheduleData.find(d => d.day === day + 1)?.focus || "Finish"}
+                <ArrowRight size={18} className="ml-3 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
 
 function ChecklistItem({ label, checked, onChange }: { label: string, checked: boolean, onChange: () => void }) {
   return (

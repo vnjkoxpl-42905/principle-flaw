@@ -14,7 +14,7 @@ import Practice from './components/Practice';
 import ReviewLog from './components/ReviewLog';
 import WelcomeScreen from './components/WelcomeScreen';
 import Profile from './components/Profile';
-
+import { StudyResource } from './data';
 import { ElegantShape } from './components/ui/shape-landing-hero';
 
 export type Tab = 'start' | 'today' | 'schedule' | 'learn' | 'practice' | 'review' | 'profile';
@@ -57,6 +57,32 @@ export default function App() {
   const setTabAndScroll = (tab: Tab) => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const [learnSubTab, setLearnSubTab] = useState<'flaw' | 'principle'>('flaw');
+  const [learnTargetSection, setLearnTargetSection] = useState<string | null>(null);
+
+  const navigateToResource = (resource: Partial<StudyResource>) => {
+    if (resource.category?.includes('Flaw')) {
+      setLearnSubTab('flaw');
+      setLearnTargetSection(resource.id === 'flaw-notes-strategy' ? 'flaw-styles' : 'flaw-intro');
+      setActiveTab('learn');
+    } else if (resource.category?.includes('Principle')) {
+      setLearnSubTab('principle');
+      setLearnTargetSection('principle-intro');
+      setActiveTab('learn');
+    } else if (resource.category?.includes('Homework')) {
+      setActiveTab('practice');
+    } else if (resource.id === 'Review Log') {
+      setActiveTab('review');
+    } else if (resource.id === 'Schedule') {
+      setActiveTab('schedule');
+    }
+    
+    // Clear section after small delay to allow effect to run
+    setTimeout(() => {
+      setLearnTargetSection(null);
+    }, 100);
   };
 
   const handleReset = () => {
@@ -175,10 +201,15 @@ export default function App() {
 
           <div className="p-6 sm:p-10 md:p-16 max-w-6xl mx-auto print:max-w-none print:p-0 relative">
             {activeTab === 'start' && <Overview userName={userName} onStart={startToday} />}
-            {activeTab === 'today' && <TodayView userName={userName} day={currentDay} setDay={handleSetDay} />}
-            {activeTab === 'schedule' && <Schedule />}
-            {activeTab === 'learn' && <Learn />}
-            {activeTab === 'practice' && <Practice currentDay={currentDay} />}
+            {activeTab === 'today' && <TodayView userName={userName} day={currentDay} setDay={handleSetDay} onOpenResource={navigateToResource} />}
+            {activeTab === 'schedule' && <Schedule currentDay={currentDay} setDay={handleSetDay} />}
+            {activeTab === 'learn' && (
+              <Learn 
+                initialTab={learnSubTab} 
+                targetSection={learnTargetSection} 
+              />
+            )}
+            {activeTab === 'practice' && <Practice currentDay={currentDay} onOpenResource={navigateToResource} />}
             {activeTab === 'review' && <ReviewLog />}
             {activeTab === 'profile' && <Profile currentName={userName} onUpdateName={handleSaveName} onReset={handleReset} />}
           </div>
